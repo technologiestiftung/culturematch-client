@@ -1,0 +1,20 @@
+<ion-button class="proto-button button-clear like"
+  (click)="toggleLike($event)">
+  <div *ngIf="label" class="like-label">
+    <div class="like-label-caption"
+      *ngIf="!like?.liked">
+      {{ label }}
+  </div>
+    <div class="like-label-caption"
+     *ngIf="like?.liked">
+      {{ 'BUTTON.REMOVE_FROM_FAVORITES' | translate }}
+    </div>
+  </div>
+  {{ like?.count }}
+  <ion-icon class="like-icon"
+    src="assets/icons/fav1-inverted.svg"
+    *ngIf="!like?.liked"></ion-icon>
+  <ion-icon class="like-icon"
+    src="assets/icons/fav2-inverted.svg"
+    *ngIf="like?.liked"></ion-icon>
+</ion-button>

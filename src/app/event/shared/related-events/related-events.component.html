@@ -1,0 +1,11 @@
+<h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.RELATED_EVENTS' | translate }}</h3>
+<ion-list class="proto-item-list">
+  <ng-container *ngIf="events.items.length === 0">
+    <ng-content></ng-content>
+  </ng-container>
+  <proto-event-preview class="tertiary"
+    *ngFor="let event of events.items;"
+    [routerLink]="['/events', event.id]"
+    [event]="event">
+  </proto-event-preview>
+</ion-list>

@@ -1,0 +1,25 @@
+@import 'src/theme/imports/helpers/middle-content';
+@import 'src/helpers';
+@import 'src/base';
+
+:host {
+}
+
+.conversations-list {
+  &--section-spacer {
+    width: 100%;
+    height: 100px;
+    background: #F2F2F2;
+    margin-top: var(--proto-space-xl);
+  }
+
+  &--list {
+    margin-top: calc(-1 * var(--proto-space-xxl));
+    padding: var(--proto-space-xl) var(--proto-space) 0 var(--proto-space);
+
+    @media (min-width: #{$proto-breakpoint-m}) {
+      padding-left: var(--proto-space-xxl);
+      padding-right: var(--proto-space-xxl);
+    }
+  }
+}

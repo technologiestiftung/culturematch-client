@@ -1,0 +1,94 @@
+<ion-content>
+
+  <div class="section section--main">
+    <div class="cell no-padding events-cell"
+      [ngClass]="{'split-view': currentSection === 'both' }">
+      <div class="events-list">
+
+        <proto-filter-preview
+          [filter]="filter"
+          [activeSegment]="currentSection"
+          (click)="openFilterModal()"></proto-filter-preview>
+
+        <ion-segment
+          mode="md"
+          class="events-segment"
+          [(ngModel)]="currentSection"
+          [disabled]="events.meta.isLoading">
+          <ion-segment-button mode="md" href="#list" value="find">
+            <ion-label>{{ 'SEGMENT.LABEL.FIND' | translate }}</ion-label>
+          </ion-segment-button>
+          <ion-segment-button mode="md" href="#map" value="create">
+            <ion-label>{{ 'SEGMENT.LABEL.CREATE' | translate }}</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
+        <ion-spinner *ngIf="events.meta.isLoading && events.meta.isFirstLoad" color="medium" class="proto-spinner"></ion-spinner>
+
+        <ion-list class="proto-item-list"
+          *ngIf="currentSection === 'create'">
+          <p class="events-list--meta"
+            *ngIf="events.meta.search && events.items.length !== 0 && !events.meta.isLoading">
+            {{ 'VIEW.EVENT_LIST.SEARCH_RESULTS' | translate: { count: events.meta.totalCount, query: events.meta.search.q } }}
+          </p>
+          <proto-event-preview class="tertiary"
+            *ngFor="let event of events.items; trackBy: trackByFunction"
+            [routerLink]="['/events', event.id]"
+            [event]="event"
+            [currentPosition]="currentPosition">
+          </proto-event-preview>
+
+          <div class="proto-empty-state"
+            *ngIf="events.items.length === 0 && !events.meta.isLoading">
+            <h2 class="proto-empty-state-headline">{{ 'EMPTY.EVENT_LIST.TITLE' | translate }}</h2>
+            <p class="proto-empty-state-message" [innerHTML]="'EMPTY.EVENT_LIST.MESSAGE' | translate"></p>
+          </div>
+
+          <ion-button class="proto-button load-more-button" color="primary" fill="outline"
+            *ngIf="events.meta.hasMore"
+            [disabled]="events.meta.isLoading"
+            (click)="loadMore()">
+            <ion-spinner *ngIf="events.meta.isLoading"></ion-spinner>
+            <ng-container *ngIf="!events.meta.isLoading">{{ 'BUTTON.LOAD_MORE' | translate }}</ng-container>
+          </ion-button>
+        </ion-list>
+
+        <ion-list class="proto-item-list"
+          *ngIf="currentSection === 'find'">
+          <p class="events-list--meta"
+            *ngIf="events.meta.search && events.items.length !== 0 && !events.meta.isLoading">
+            {{ 'VIEW.EVENT_LIST.SEARCH_RESULTS' | translate: { count: events.meta.totalCount, query: events.meta.search.q } }}
+          </p>
+
+          <proto-event-preview class="tertiary"
+            *ngFor="let event of eventsWithAds; trackBy: trackByFunction"
+            [routerLink]="['/events', event.id]"
+            [event]="event"
+            [currentPosition]="currentPosition">
+          </proto-event-preview>
+
+          <div class="proto-empty-state"
+            *ngIf="events.items.length === 0 && !events.meta.isLoading">
+            <h2 class="proto-empty-state-headline">{{ 'EMPTY.EVENT_LIST.TITLE' | translate }}</h2>
+            <p class="proto-empty-state-message" [innerHTML]="'EMPTY.EVENT_LIST.MESSAGE' | translate"></p>
+          </div>
+
+          <ion-button class="proto-button load-more-button" color="primary" fill="outline"
+            *ngIf="events.meta.hasMore"
+            [disabled]="events.meta.isLoading"
+            (click)="loadMore()">
+            <ion-spinner *ngIf="events.meta.isLoading"></ion-spinner>
+            <ng-container *ngIf="!events.meta.isLoading">{{ 'BUTTON.LOAD_MORE' | translate }}</ng-container>
+          </ion-button>
+        </ion-list>
+      </div>
+
+    </div>
+  </div>
+
+  <section *ngIf="currentSection !== 'both'" class="section secondary section--footer">
+    <div class="cell">
+      <proto-footer></proto-footer>
+    </div>
+  </section>
+</ion-content>

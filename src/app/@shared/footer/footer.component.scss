@@ -1,0 +1,56 @@
+@import 'src/helpers';
+@import 'src/base';
+
+:host {
+  display: flex;
+  align-items: center;
+  padding: var(--proto-space);
+  color: white;
+  background: var(--ion-color-primary);
+}
+
+img {
+  display: block;
+  flex: none;
+  width: 35%;
+  max-width: 117px;
+  margin-right: var(--proto-space);
+}
+
+.footer-content {
+
+  &__info {
+    @extend %small;
+      margin-bottom: 12px;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+
+    &, .footer-copyright {
+      @extend %teaser;
+    }
+
+    a {
+      color: var(--ion-color-dark);
+    }
+
+    .footer-copyright {
+      flex: none;
+      margin-left: auto;
+    }
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+
+  a {
+    color: white;
+    margin-top: var(--proto-space-xs);
+    margin-right: var(--proto-space-s);
+  }
+}

@@ -1,0 +1,48 @@
+<ion-content>
+
+  <div class="section conversation-detail--section-spacer"></div>
+
+  <div class="section">
+    <div class="cell conversation-detail--content">
+
+      <div class="cell conversation-detail--info">
+        <h2>
+          <a [routerLink]="['/events', conversation?.ad.eventId]">
+            {{ conversation?.ad.eventTitle }}
+          </a>
+        </h2>
+      </div>
+
+      <ion-list class="conversation-detail--list">
+        <div class="conversation-detail--message"
+          *ngFor="let message of messages?.items">
+          <p class="conversation-detail--message-sender">
+            von {{ message.senderId === userService.getCurrentUser().id ? 'Dir' : conversation?.counterpart.displayName }}
+            <span class="conversation-detail--message-time">
+              um {{ message.createdAt | amDateFormat:'DD.MM.YYYY | HH:mm' }} Uhr
+            </span>
+          </p>
+          <div class="conversation-detail--message-content"
+            [ngClass]="{'conversation-detail--message-content__self': message.senderId === userService.getCurrentUser().id}">
+            {{ message.content }}
+          </div>
+        </div>
+      </ion-list>
+
+      <form class="message-form conversation-detail--list" novalidate [formGroup]="messageForm" (ngSubmit)="submit()">
+        <ion-item class="proto-input has-valid-state">
+          <ion-label position="floating">{{ 'INPUT.LABEL.MESSAGE' | translate }}</ion-label>
+          <ion-textarea formControlName="content" [placeholder]="'INPUT.PLACEHOLDER.MESSAGE' | translate"></ion-textarea>
+        </ion-item>
+
+        <ion-button class="proto-button conversation-detail--button" expand="block"
+          [disabled]="!messageFormIsValid()"
+          (click)="submit()">
+          {{ 'BUTTON.SUBMIT' | translate }}
+        </ion-button>
+      </form>
+
+    </div>
+  </div>
+
+</ion-content>

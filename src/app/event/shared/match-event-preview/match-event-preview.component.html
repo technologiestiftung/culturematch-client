@@ -1,0 +1,28 @@
+<div class="event-preview-banner">
+  <img class="cover-img" [src]="imageUrl" (error)="onImageError()">
+  <div *ngIf="event.price?.free" class="event-preview-badge">
+    {{ 'TERM.FOR_FREE' | translate }}
+  </div>
+</div>
+
+<div class="event-preview-interested">
+  <p>{{ 'TERM.PEOPLE_INTERESTED' | translate: { count: event.adCount } }}</p>
+</div>
+<div class="event-preview-content">
+  <proto-event-date class="event-preview-date"
+    *ngIf="event.dates && event.dates[0]"
+    [event]="event"
+    [eventDate]="event.dates[0]">
+  </proto-event-date>
+  <h2 class="event-preview-title">
+    {{ event.title }}
+  </h2>
+  <ng-container *ngIf="event.venue">
+    <p class="event-preview-meta">
+      {{ event.venue.general.name }}
+      <ng-container *ngIf="distance">
+        | {{ 'TERM.DISTANCE_IN_KM' | translate: { distance: distance } }}
+      </ng-container>
+    </p>
+  </ng-container>
+</div>

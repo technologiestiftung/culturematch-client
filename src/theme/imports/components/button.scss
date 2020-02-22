@@ -1,0 +1,83 @@
+.proto-button {
+
+  @extend %p;
+
+  --margin: var(--proto-space);
+
+  height: 48px;
+
+  letter-spacing: initial;
+
+  --border-radius: 3px;
+
+  --box-shadow: none;
+
+  &.button-clear {
+    --box-shadow: none;
+    --background: transparent;
+    --background-hover: transparent;
+    --margin: 0;
+    --padding: 0;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    &:hover {
+      --background: transparent;
+    }
+  }
+
+  &.button-round {
+    --padding-start: 0;
+    --padding-end: 0;
+    --border-radius: 50%;
+    --margin: 0;
+    --padding: 0;
+    width: 56px;
+    height: 56px;
+  }
+
+  &.button-round-inverted {
+    --border-color: var(--ion-color-primary);
+    border: 1px solid var(--ion-color-primary);
+    border-radius: 50%;
+    --background: white;
+  }
+
+  &.button-icon {
+    --padding-start: var(--proto-space);
+    --padding-end: var(--proto-space);
+    ion-icon {
+      margin-right: 4px;
+    }
+  }
+
+  &.button-social-media {
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    margin: 0 var(--proto-space) 0 0;
+    ion-icon {
+      font-size: 38px;
+    }
+  }
+
+  &.mobile-only {
+    @include proto-breakpoint-m {
+      display: none;
+    }
+  }
+}
+
+.proto-fab-button {
+  width: 40px;
+  height: 40px;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+ion-button {
+  outline: none;
+}

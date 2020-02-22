@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ 'FILTER.TITLE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-block">
+    <ion-list class="proto-input-list">
+      <ion-item class="proto-input proto-input--select">
+        <ion-label position="floating">{{ 'FILTER.ORDER.TITLE' | translate }}:</ion-label>
+        <ion-select [(ngModel)]="orderBy">
+          <ion-select-option
+            *ngFor="let ITEM of ('FILTER.ORDER.OPTIONS' | translate)"
+            [value]="ITEM.VALUE">{{ ITEM.LABEL }}</ion-select-option>
+        </ion-select>
+        <div class="select-arrow"></div>
+      </ion-item>
+
+      <ion-item class="proto-input proto-input--select">
+        <ion-label position="floating">{{ 'FILTER.PRICE_RANGE.TITLE' | translate }}:</ion-label>
+        <ion-select [(ngModel)]="priceRange">
+          <ion-select-option
+            *ngFor="let ITEM of ('FILTER.PRICE_RANGE.OPTIONS' | translate)"
+            [value]="ITEM.VALUE">{{ ITEM.LABEL }}</ion-select-option>
+        </ion-select>
+        <div class="select-arrow"></div>
+      </ion-item>
+
+      <ion-item *ngIf="tags.length" class="proto-input proto-input--select">
+        <ion-label position="floating">{{ 'FILTER.TAGS.TITLE' | translate }}:</ion-label>
+        <ion-select [(ngModel)]="locationCategoryId">
+          <ion-select-option value="___ALL___">{{ 'TERM.ALL' | translate }}</ion-select-option>
+          <ion-select-option
+            *ngFor="let tag of tags"
+            [value]="tag.id">{{ tag.name }}</ion-select-option>
+        </ion-select>
+        <div class="select-arrow"></div>
+      </ion-item>
+      <ion-item class="proto-checkbox">
+        <ion-checkbox [(ngModel)]="locationDistance.isActive"></ion-checkbox>
+        <ion-label class="proto-checkbox-label has-columns"
+          [ngClass]="{ 'is-inactive': !locationDistance.isActive }">
+          <p class="proto-checkbox-label__col">{{ 'FILTER.DISTANCE.TITLE' | translate }}:</p>
+          <p class="proto-checkbox-label__col" [hidden]="!locationDistance.isActive">{{ locationDistance.current }} {{ 'FILTER.DISTANCE.UNIT' | translate }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item class="proto-range">
+        <ion-range color="secondary"
+          [(ngModel)]="locationDistance.current"
+          [min]="locationDistance.min"
+          [max]="locationDistance.max"
+          [disabled]="!locationDistance.isActive">
+        </ion-range>
+      </ion-item>
+
+      <div class="form-buttons">
+        <ion-button class="proto-button" expand="block" (click)="applyFilter()">
+          {{'BUTTON.APPLY' | translate }}
+        </ion-button>
+        <ion-button class="proto-button" size="small" fill="clear" color="dark" expand="block" (click)="clearFilter()">
+          {{ 'BUTTON.RESET_FILTER' | translate }}
+        </ion-button>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>

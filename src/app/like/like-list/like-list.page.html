@@ -1,0 +1,81 @@
+<ion-content>
+  <section class="section has-footer">
+    <div class="cell cell--s">
+      <ion-segment
+        mode="md"
+        [(ngModel)]="currentSection">
+        <ion-segment-button class="like-list-segment--button" mode="md" href="#list" color="primary" value="events"
+          [ngClass]="{'like-list-segment--button__active' : currentSection === 'events'}">
+          <ion-label>{{ 'SEGMENT.LABEL.EVENTS' | translate }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button class="like-list-segment--button" mode="md" href="#map" color="primary" value="locations"
+          [ngClass]="{'like-list-segment--button__active' : currentSection === 'locations'}">
+          <ion-label>{{ 'SEGMENT.LABEL.LOCATIONS' | translate }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-list class="proto-item-list">
+        <ng-container
+          *ngIf="currentSection === 'events'">
+
+          <ion-spinner *ngIf="likedEvents.meta.isLoading && likedEvents.meta.isFirstLoad" color="medium" class="proto-spinner"></ion-spinner>
+
+          <proto-event-preview class="tertiary"
+            *ngFor="let event of likedEvents.items; trackBy: trackByFunction"
+            [event]="event.entity"
+            [currentPosition]="currentPosition"
+            [routerLink]="['/events', event.entityId]">
+          </proto-event-preview>
+
+          <div class="proto-empty-state"
+            *ngIf="likedEvents.items.length === 0 && !likedEvents.meta.isLoading">
+            <h2 class="proto-empty-state-title">{{ 'EMPTY.FAVORITE_LIST.TITLE' | translate }}</h2>
+            <p class="proto-empty-state-message">{{ 'EMPTY.FAVORITE_LIST.MESSAGE' | translate }}</p>
+          </div>
+
+          <ion-button class="proto-button load-more-button" color="primary" fill="outline"
+            *ngIf="likedEvents.meta.hasMore"
+            [disabled]="likedEvents.meta.isLoading"
+            (click)="loadMore('event')">
+            <ion-spinner *ngIf="likedEvents.meta.isLoading"></ion-spinner>
+            <ng-container *ngIf="!likedEvents.meta.isLoading">{{ 'BUTTON.LOAD_MORE' | translate }}</ng-container>
+          </ion-button>
+        </ng-container>
+
+        <ng-container
+          *ngIf="currentSection === 'locations'">
+
+          <ion-spinner *ngIf="likedLocations.meta.isLoading && likedLocations.meta.isFirstLoad" color="medium" class="proto-spinner"></ion-spinner>
+
+          <proto-location-preview class="tertiary"
+            *ngFor="let location of likedLocations.items; trackBy: trackByFunction"
+            [location]="location.entity"
+            [currentPosition]="currentPosition"
+            [routerLink]="['/locations', location.entityId]">
+          </proto-location-preview>
+
+          <div class="proto-empty-state"
+            *ngIf="likedLocations.items.length === 0 && !likedLocations.meta.isLoading">
+            <h2 class="proto-empty-state-title">{{ 'EMPTY.FAVORITE_LIST.TITLE' | translate }}</h2>
+            <p class="proto-empty-state-message">{{ 'EMPTY.FAVORITE_LIST.MESSAGE' | translate }}</p>
+          </div>
+
+          <ion-button class="proto-button load-more-button" color="primary" fill="outline"
+            *ngIf="likedLocations.meta.hasMore"
+            [disabled]="likedLocations.meta.isLoading"
+            (click)="loadMore('location')">
+            <ion-spinner *ngIf="likedLocations.meta.isLoading"></ion-spinner>
+            <ng-container *ngIf="!likedLocations.meta.isLoading">{{ 'BUTTON.LOAD_MORE' | translate }}</ng-container>
+          </ion-button>
+
+        </ng-container>
+      </ion-list>
+    </div>
+  </section>
+
+  <section class="section secondary section--footer">
+    <div class="cell">
+      <proto-footer></proto-footer>
+    </div>
+  </section>
+</ion-content>

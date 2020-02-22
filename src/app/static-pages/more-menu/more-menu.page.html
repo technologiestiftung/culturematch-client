@@ -1,0 +1,38 @@
+<ion-content>
+  <ion-list class="proto-item-list" lines="full">
+    <ion-item class="proto-item" detail="true"
+      [routerLink]="['/main']" routerDirection="forward">
+      {{ 'VIEW.IMPRINT.START' | translate }}
+    </ion-item>
+    <ion-item class="proto-item" detail="true"
+      [routerLink]="['/events']" routerDirection="forward">
+      {{ 'VIEW.IMPRINT.DISCOVER' | translate }}
+    </ion-item>
+    <ion-item class="proto-item" detail="true"
+      [routerLink]="['/favorites']" routerDirection="forward">
+      {{ 'VIEW.IMPRINT.FAVORITES' | translate }}
+    </ion-item>
+    <ion-item class="proto-item" detail="true"
+      [routerLink]="['/main/more/imprint']" routerDirection="forward">
+      {{ 'VIEW.IMPRINT.INFORMATION' | translate }}
+    </ion-item>
+    <ion-item class="proto-item" detail="true"
+      [routerLink]="['/main/more/agreements/privacy']" routerDirection="forward">
+      {{ 'VIEW.MORE.PRIVACY' | translate }}
+    </ion-item>
+
+    <ion-item class="proto-item" detail="true"
+      [routerLink]="['/main/more/agreements/terms']" routerDirection="forward">
+      {{ 'VIEW.MORE.TERMS' | translate }}
+    </ion-item>
+
+    <ion-list-header></ion-list-header>
+
+    <proto-language-switch></proto-language-switch>
+    <ion-item class="proto-item" detail="false"
+      (click)="logout()">
+      {{ 'BUTTON.LOGOUT' | translate }}
+      <ion-icon name="log-out" slot="end" color="dark"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

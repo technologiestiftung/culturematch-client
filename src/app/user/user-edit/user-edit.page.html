@@ -1,0 +1,69 @@
+<ion-content>
+  <section class="section form-section">
+    <div class="cell cell--s">
+
+      <h5 class="user-edit-headline">
+        {{ 'VIEW.USER_EDIT.TITLE' | translate }}
+      </h5>
+
+      <form class="user-edit-form" novalidate [formGroup]="editForm" (ngSubmit)="saveUser()">
+        <ion-list mode="ios" class="proto-input-list">
+
+          <ion-item class="proto-input has-valid-state">
+            <ion-label position="floating">{{ 'INPUT.LABEL.DISPLAY_NAME' | translate }}</ion-label>
+            <ion-input type="text" value="" formControlName="displayName" [placeholder]="'INPUT.PLACEHOLDER.DISPLAY_NAME' | translate"></ion-input>
+          </ion-item>
+
+          <ion-item class="proto-input has-valid-state">
+            <ion-label position="floating">{{ 'INPUT.LABEL.EMAIL' | translate }}</ion-label>
+            <ion-input type="email" value="" formControlName="email" [placeholder]="'INPUT.PLACEHOLDER.EMAIL' | translate"></ion-input>
+          </ion-item>
+
+          <ion-button class="proto-button form-button" expand="block"
+            [disabled]="!editFormIsValid()"
+            (click)="saveUser()">
+            {{ 'BUTTON.SAVE' | translate }}
+          </ion-button>
+
+        </ion-list>
+      </form>
+
+      <form class="user-edit-form" novalidate [formGroup]="passwordEditForm" (ngSubmit)="saveNewPassword()">
+        <ion-list mode="ios" class="proto-input-list">
+          <proto-show-hide-password
+            formControlName="password"
+            [label]="('INPUT.LABEL.NEW_PASSWORD' | translate)"
+            [placeholder]="('INPUT.LABEL.NEW_PASSWORD' | translate: { passwordMinLength: passwordMinLength })">
+          </proto-show-hide-password>
+
+          <proto-show-hide-password
+            formControlName="passwordConfirmation"
+            [label]="('INPUT.LABEL.PASSWORD_CONFIRMATION' | translate)"
+            [placeholder]="('INPUT.LABEL.PASSWORD_CONFIRMATION' | translate)">
+          </proto-show-hide-password>
+
+          <ion-button class="proto-button form-button" expand="block"
+            [disabled]="!passwordEditFormIsValid()"
+            (click)="saveNewPassword()">
+            {{ 'BUTTON.SAVE' | translate }}
+          </ion-button>
+
+        </ion-list>
+      </form>
+
+    </div>
+  </section>
+
+  <div class="section form-section">
+    <div class="cell">
+      <div class="user-edit-spacer"></div>
+    </div>
+  </div>
+
+  <section class="section secondary section--footer">
+    <div class="cell">
+      <proto-footer></proto-footer>
+    </div>
+  </section>
+
+</ion-content>

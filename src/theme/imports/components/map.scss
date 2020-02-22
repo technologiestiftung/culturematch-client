@@ -1,0 +1,83 @@
+.mapboxgl-canvas {
+  background: #eee;
+  outline: none;
+}
+
+.mapboxgl-ctrl-bottom-right {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: var(--proto-space-xs) var(--proto-space-s);
+  background: rgba(255,255,255,0.75);
+
+  a {
+    @extend %p;
+    margin: 0 var(--proto-space-xs);
+    color: var(--ion-color-dark);
+  }
+}
+
+.mapboxgl-popup {
+  display: inline-block;
+  max-width: 450px!important;
+  padding: var(--proto-space);
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.3);
+  cursor: default;
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+
+    &--close {
+      display: none;
+      box-sizing: content-box;
+      margin: -8px -8px 0;
+      padding: var(--proto-space-s);
+      cursor: pointer;
+
+      &:hover {
+        opacity: .7;
+      }
+    }
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    pointer-events: initial;
+
+    &.location-link {
+      @extend %h4;
+      margin-bottom: var(--proto-space-s);
+      color: var(--ion-color-dark);
+      text-decoration: underline;
+
+      .map-icon {
+        margin-left: var(--proto-space-l);
+      }
+    }
+
+    &.event-link {
+      @extend %p;
+      margin-left: auto;
+      font-weight: bold;
+
+      .map-icon {
+        margin-left: var(--proto-space-xs);
+      }
+    }
+  }
+
+  .teaser {
+    margin-bottom: var(--proto-space-m);
+  }
+}

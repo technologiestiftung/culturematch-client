@@ -1,0 +1,119 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ 'FILTER.TITLE' | translate }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button class="proto-button" fill="clear" (click)="applyFilter()">
+        {{'BUTTON.APPLY' | translate }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="form-block">
+    <ion-list class="proto-input-list">
+
+      <!-- <ion-item class="proto-input proto-input--select"> -->
+      <!--   <ion-label position="floating">{{ 'VIEW.FILTER.TIME' | translate }}</ion-label> -->
+      <!--   <ion-select [(ngModel)]="time" multiple -->
+      <!--     [placeholder]="'TERM.ALL' | translate"> -->
+      <!--     <ng-container *ngIf="initialized"> -->
+      <!--       <ion-select-option -->
+      <!--         *ngFor="let ITEM of getFilterOptions('TIME')" -->
+      <!--         [value]="ITEM.VALUE">{{ ITEM.LABEL }}</ion-select-option> -->
+      <!--     </ng-container> -->
+      <!--   </ion-select> -->
+      <!--   <div class="select-arrow"></div> -->
+      <!-- </ion-item> -->
+
+      <ion-item class="proto-input proto-input--select proto-input--datetime item-has-placeholder" (click)="pickerFrom.open()">
+        <ion-label position="floating">{{ 'VIEW.FILTER.DATE_FROM' | translate }}</ion-label>
+        <input class="mat-input"
+          [matDatepicker]="pickerFrom"
+          [(ngModel)]="dateFrom" readonly
+          [placeholder]="'TERM.TODAY' | translate">
+        <div class="select-arrow"></div>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </ion-item>
+
+      <ion-item class="proto-input proto-input--select proto-input--datetime item-has-placeholder" (click)="pickerTo.open()">
+        <ion-label position="floating">{{ 'VIEW.FILTER.DATE_TO' | translate }}</ion-label>
+        <input class="mat-input"
+          [matDatepicker]="pickerTo"
+          [(ngModel)]="dateTo" readonly
+          [placeholder]="'TERM.UNLIMITED' | translate">
+        <div class="select-arrow"></div>
+        <mat-datepicker #pickerTo></mat-datepicker>
+      </ion-item>
+
+      <ion-item *ngIf="tags.length" class="proto-input proto-input--select">
+        <ion-label position="floating">{{ 'VIEW.FILTER.TAGS' | translate }}</ion-label>
+        <ion-select [(ngModel)]="tagIds" multiple
+          [placeholder]="'TERM.ALL' | translate">
+          <ng-container *ngIf="initialized">
+            <ion-select-option
+              *ngFor="let tag of tags"
+              [value]="tag.id">{{ tag.name }}</ion-select-option>
+          </ng-container>
+        </ion-select>
+        <div class="select-arrow"></div>
+      </ion-item>
+
+      <ion-item class="proto-input proto-input--select">
+        <ion-label position="floating">{{ 'VIEW.FILTER.TARGET_AUDIENCE' | translate }}</ion-label>
+        <ion-select [(ngModel)]="targetAudience" multiple
+          [placeholder]="'TERM.ALL' | translate">
+          <ng-container *ngIf="initialized">
+            <ion-select-option
+              *ngFor="let ITEM of getFilterOptions('TARGET_AUDIENCE')"
+              [value]="ITEM.VALUE">{{ ITEM.LABEL }}</ion-select-option>
+          </ng-container>
+        </ion-select>
+        <div class="select-arrow"></div>
+      </ion-item>
+
+      <ion-item class="proto-input proto-input--select">
+        <ion-label position="floating">{{ 'VIEW.FILTER.PRICE_RANGE' | translate }}</ion-label>
+        <ion-select [(ngModel)]="priceRange" multiple
+          [placeholder]="'TERM.ALL' | translate">
+          <ng-container *ngIf="initialized">
+            <ion-select-option
+              *ngFor="let ITEM of getFilterOptions('PRICE_RANGE')"
+              [value]="ITEM.VALUE">{{ ITEM.LABEL }}</ion-select-option>
+          </ng-container>
+        </ion-select>
+        <div class="select-arrow"></div>
+      </ion-item>
+
+      <ion-item class="proto-checkbox">
+        <ion-checkbox [(ngModel)]="eventDistance.isActive"></ion-checkbox>
+        <ion-label class="proto-checkbox-label has-columns"
+          [ngClass]="{ 'is-inactive': !eventDistance.isActive }">
+          <p class="proto-checkbox-label__col">{{ 'FILTER.DISTANCE.TITLE' | translate }}</p>
+          <p class="proto-checkbox-label__col" [hidden]="!eventDistance.isActive">{{ eventDistance.current }} {{ 'FILTER.DISTANCE.UNIT' | translate }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item class="proto-range">
+        <ion-range color="secondary"
+          [(ngModel)]="eventDistance.current"
+          [min]="eventDistance.min"
+          [max]="eventDistance.max"
+          [disabled]="!eventDistance.isActive"
+          step="1">
+        </ion-range>
+      </ion-item>
+
+      <div class="form-buttons">
+        <ion-button class="proto-button" size="small" fill="clear" color="dark" expand="block" (click)="clearFilter()">
+          {{ 'BUTTON.RESET_FILTER' | translate }}
+        </ion-button>
+      </div>
+    </ion-list>
+  </div>
+</ion-content>

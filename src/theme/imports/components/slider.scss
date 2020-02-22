@@ -1,0 +1,25 @@
+ion-slides {
+
+  .swiper-pagination-bullet {
+    opacity: 1;
+  }
+
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets {
+  bottom: var(--proto-space-xl);
+}
+
+.image-slider {
+  padding-bottom: var(--proto-space-xl);
+
+  > .swiper-pagination-bullets {
+    bottom: var(--proto-space-s);
+    width: auto;
+    text-align: left;
+
+    .swiper-pagination-bullet {
+      margin: 0 var(--proto-space-s);
+    }
+  }
+}

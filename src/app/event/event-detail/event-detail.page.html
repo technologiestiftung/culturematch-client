@@ -1,0 +1,526 @@
+<ion-content>
+
+  <ng-container *ngIf="!event">
+    <div class="section">
+      <div class="cell cell--skeleton-content">
+        <div class="button">
+          <ion-skeleton-text style="width: 80px"></ion-skeleton-text>
+        </div>
+        <div class="tiny ion-margin-vertical">
+          <ion-skeleton-text style="width: 120px"></ion-skeleton-text>
+        </div>
+        <h2>
+          <ion-skeleton-text style="width: 60%"></ion-skeleton-text>
+          <ion-skeleton-text style="width: 50%"></ion-skeleton-text>
+        </h2>
+        <p>
+          <ion-skeleton-text style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text style="width: 100%"></ion-skeleton-text>
+          <ion-skeleton-text style="width: 80%"></ion-skeleton-text>
+        </p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="event">
+
+    <div class="section">
+      <div class="cell cell--content">
+        <div class="event-detail-like">
+          <div class="event-detail-badge-container">
+            <div *ngIf="event.dates[0] && event.dates[0].type[0]" class="event-detail-badge">
+              {{ event.dates[0].type[0] }}
+            </div>
+            <div *ngIf="event.dates[0] && event.dates[0].type[1]" class="event-detail-badge">
+              {{ event.dates[0].type[1] }}
+            </div>
+            <div *ngIf="event?.price.free" class="event-detail-badge">
+              {{ 'TERM.FOR_FREE' | translate }}
+            </div>
+          </div>
+          <proto-like [entityId]="event.id" [entityType]="'event'" [label]="'BUTTON.ADD_TO_FAVORITES' | translate"></proto-like>
+        </div>
+
+        <div class="event-detail-content">
+          <div class="event-detail-content__inner">
+            <h2 class="event-detail-content__title">{{ event.title }}</h2>
+            <p class="event-detail-content__subtitle">{{ event.subtitle }}</p>
+            <proto-event-date class="event-detail-content__date"
+              *ngIf="event.dates[0]"
+              [event]="event"
+              [eventDate]="event.dates[0]"
+              [hideAdditionalEvents]="event.isPermanent || event.isTimeLimited"
+              [relatedEventsClickable]="!event.isPermanent && !event.isTimeLimited"
+              (relatedEvents)="scrollToRelated()">
+            </proto-event-date>
+          </div>
+          <ion-button class="proto-button button-clear event-detail-content-calendar-button"
+            *ngIf="event.dates?.length"
+            (click)="addToCalendar()">
+            {{ 'BUTTON.ADD_TO_CALENDAR' | translate }}
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section event-detail-section"
+      *ngIf="ads.items.length">
+      <div class="cell cell--content" >
+        <div class="event-detail-ad--list">
+          <h2 class="event-detail-ad--heading">
+            {{ 'TERM.PEOPLE_INTERESTED' | translate: { count: ads?.meta.totalCount || event.adCount } }}
+          </h2>
+          <div>
+            <proto-ad-preview
+              *ngFor="let ad of ads?.items"
+              [ad]="ad">
+            </proto-ad-preview>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="cell cell--content" >
+        <div class="event-detail-ad--open"
+          (click)="openAdEdit()">
+          <div class="event-detail-ad--open__heading">
+            <h2>
+              {{'VIEW.EVENT_DETAIL.AD.HEADLINE' | translate }}
+            </h2>
+            <p>
+              {{'VIEW.EVENT_DETAIL.AD.CONTENT' | translate }}
+            </p>
+          </div>
+
+          <ion-button class="event-detail-ad--open__button">
+            {{ 'BUTTON.CREATE_AD' | translate }}
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section section--no-spacing">
+      <div class="cell cell--content__no-margin-bottom">
+        <h2 class="event-detail-content__title">{{ 'VIEW.EVENT_DETAIL.MORE_INFO' | translate }}</h2>
+      </div>
+    </div>
+
+    <div *ngIf="event.images.length" class="section">
+      <div class="cell cell--hero" [ngClass]="{
+        'has-slider': event.images.length > 1,
+        'has-bottom-space': event.images.length === 1 && event.images[0].description }">
+        <div class="event-preview-banner">
+          <ion-slides #slides pager="true" mode="ios" class="image-slider"
+            *ngIf="event.images.length > 1" [options]="imageSliderOptions">
+            <ion-slide class="image-slider-slide" *ngFor="let image of event.images; trackBy: trackByFunction">
+              <div class="image-slider-slide__inner">
+                <img [src]="image.url"/>
+              </div>
+              <p *ngIf="image.source" class="event-preview-banner-copyright">
+                {{ image.source }}
+              </p>
+              <div class="event-preview-banner--info"
+                [ngStyle]="{ 'left': event.images.length * 27 + 'px' }">
+                <p class="event-preview-banner--info__description">
+                  {{ image.description }}
+                </p>
+              </div>
+            </ion-slide>
+          </ion-slides>
+          <ion-button class="proto-button button-round image-slider-button image-slider-button__left"
+            *ngIf="event.images.length > 1"
+            (click)="slidePrevious()">
+            <ion-icon src="assets/icons/chevron-back.svg"></ion-icon>
+          </ion-button>
+          <ion-button class="proto-button button-round image-slider-button image-slider-button__right"
+            *ngIf="event.images.length > 1"
+            (click)="slideNext()">
+            <ion-icon src="assets/icons/chevron-next.svg"></ion-icon>
+          </ion-button>
+          <ng-container
+            *ngIf="event.images.length === 1">
+            <img class="cover-img"
+              [src]="event.images[0].url">
+            <p *ngIf="event.images[0].source" class="event-preview-banner-copyright">
+              {{ event.images[0].source }}
+            </p>
+            <div *ngIf="event.images[0].description" class="event-preview-banner--info">
+              <p class="event-preview-banner--info__description">
+                {{ event.images[0].description }}
+              </p>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="cell cell--split">
+
+        <!-- event -->
+        <div class="cell cell--split--view">
+          <!-- desc -->
+          <ng-container *ngIf="event.description">
+            <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.DESCRIPTION' | translate }}</h3>
+            <p [innerHTML]=" event.description "></p>
+          </ng-container>
+
+          <!-- tags -->
+          <ng-container *ngIf="event.tags.length">
+            <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.TAGS' | translate }}</h3>
+            <p>{{ tags }}</p>
+          </ng-container>
+          <!-- tickets -->
+          <ng-container *ngIf="event.price?.tickets.length">
+            <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.TICKET_PRICES' | translate }}</h3>
+            <div class="ticket-buttons">
+              <ion-button class="proto-button button-icon button-out" target="_blank"
+                *ngFor="let ticket of event.price.tickets"
+                [href]="ticket.link">
+                <ion-icon src="assets/icons/share.svg"></ion-icon>
+                {{ ticket.name }}: {{ ticket.value }} Euro
+              </ion-button>
+            </div>
+          </ng-container>
+          <!-- accessibility -->
+          <ng-container *ngIf="event.dates[0].accessibility && (event.dates[0].accessibility.wheelchair || event.dates[0].accessibility.blind.braille || event.dates[0].accessibility.blind.audioguide || event.dates[0].accessibility.deaf.subtitles || event.dates[0].accessibility.deaf.signLanguage || event.dates[0].accessibility.deaf.hearingAid || event.dates[0].accessibility.deaf.videoguide)">
+            <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.ACCESSIBILITY_EVENT' | translate }}</h3>
+            <ng-container *ngIf="event.dates[0].accessibility.wheelchair">
+              <ion-icon src="assets/icons/accessibility-wheelchair.svg" color="primary"></ion-icon>
+              <ul class="event-detail-list">
+                <li>
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.TITLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.wheelchair?.accessible === 'yes'">
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.YES' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.wheelchair?.accessible === 'no'">
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.NO' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.wheelchair?.accessible === 'limited'">
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.LIMITED' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.wheelchair?.accessible === 'unknown'">
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.UNKNOWN' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.wheelchair?.description">
+                  {{ event.dates[0].accessibility.wheelchair.description }}
+                </li>
+              </ul>
+            </ng-container>
+            <ng-container *ngIf="event.dates[0].accessibility.blind && (event.dates[0].accessibility.blind.braille || event.dates[0].accessibility.blind.audioguide)">
+              <ion-icon src="assets/icons/accessibility-blind.svg" color="primary"></ion-icon>
+              <ul class="event-detail-list">
+                <li>
+                  {{ 'TERM.ACCESSIBILITY.BLIND.TITLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.blind?.braille">
+                  {{ 'TERM.ACCESSIBILITY.BLIND.BRAILLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.blind?.audioguide">
+                  {{ 'TERM.ACCESSIBILITY.BLIND.AUDIOGUIDE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.blind?.germanLanguage">
+                  {{ 'TERM.ACCESSIBILITY.GERMAN_LANGUAGE.AVAILABLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.blind?.otherLanguages.length > 0">
+                  {{ 'TERM.ACCESSIBILITY.ADDITIONAL_LANGUAGES' | translate }}
+                </li>
+                <li *ngFor="let language of event.dates[0].accessibility.blind.otherLanguages">{{ language }}</li>
+                <li *ngIf="event.dates[0].accessibility.blind?.description">
+                  {{ event.dates[0].accessibility.blind.description }}
+                </li>
+              </ul>
+            </ng-container>
+            <ng-container *ngIf="event.dates[0].accessibility.deaf && (event.dates[0].accessibility.deaf.subtitles || event.dates[0].accessibility.deaf.signLanguage || event.dates[0].accessibility.deaf.hearingAid || event.dates[0].accessibility.deaf.videoguide)">
+              <ion-icon src="assets/icons/accessibility-deaf.svg" color="primary"></ion-icon>
+              <ul class="event-detail-list">
+                <li>
+                  {{ 'TERM.ACCESSIBILITY.DEAF.TITLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.deaf?.videoguide">
+                  {{ 'TERM.ACCESSIBILITY.DEAF.VIDEOGUIDE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.deaf?.hearingAid">
+                  {{ 'TERM.ACCESSIBILITY.DEAF.HEARING_AID' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.deaf?.subtitles">
+                  {{ 'TERM.ACCESSIBILITY.DEAF.SUBTITLES' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.deaf?.signLanguage">
+                  {{ 'TERM.ACCESSIBILITY.DEAF.SIGN_LANGUAGE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.deaf?.germanLanguage">
+                  {{ 'TERM.ACCESSIBILITY.GERMAN_LANGUAGE.AVAILABLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].accessibility.blind?.otherLanguages.length > 0">
+                  {{ 'TERM.ACCESSIBILITY.ADDITIONAL_LANGUAGES' | translate }}
+                </li>
+                <li *ngFor="let language of event.dates[0].accessibility.deaf.otherLanguages">{{ language }}</li>
+                <li *ngIf="event.dates[0].accessibility.deaf?.description">
+                  {{ event.dates[0].accessibility.deaf.description }}
+                </li>
+              </ul>
+            </ng-container>
+          </ng-container>
+          <!-- social -->
+          <ng-container *ngIf="event.social">
+            <ng-container *ngIf="event.social.facebook || event.social.instagram || event.social.twitter || event.social.youtube">
+              <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.SOCIAL_MEDIA' | translate }}</h3>
+              <ion-button class="proto-button button-clear button-social-media" icon-only
+                *ngIf="event.social.facebook"
+                [href]="event.social.facebook" target="_blank">
+                <ion-icon src="assets/icons/facebook-primary.svg" color="primary"
+                ></ion-icon>
+              </ion-button>
+              <ion-button class="proto-button button-clear button-social-media" icon-only
+                *ngIf="event.social.instagram"
+                [href]="event.social.instagram" target="_blank">
+                <ion-icon src="assets/icons/instagram-primary.svg" color="primary"></ion-icon>
+              </ion-button>
+              <ion-button class="proto-button button-clear button-social-media" icon-only
+                *ngIf="event.social.twitter"
+                [href]="event.social.twitter" target="_blank">
+                <ion-icon src="assets/icons/twitter-primary.svg" color="primary"></ion-icon>
+              </ion-button>
+              <ion-button class="proto-button button-clear button-social-media" icon-only
+                *ngIf="event.social.youtube"
+                [href]="event.social.youtube" target="_blank">
+                <ion-icon src="assets/icons/youtube-primary.svg" color="primary"></ion-icon>
+              </ion-button>
+            </ng-container>
+
+            <ng-container *ngIf="event.social.website">
+              <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.LINKS' | translate }}</h3>
+              <ion-button [href]="event.social.website" target="_blank" class="proto-button button-icon button-out">
+                <ion-icon src="assets/icons/share.svg"></ion-icon>
+                {{ 'VIEW.EVENT_DETAIL.HOMEPAGE' | translate }}
+              </ion-button>
+            </ng-container>
+          </ng-container>
+        </div>
+
+        <!-- venue -->
+        <div class="cell cell--split--view"
+          *ngIf="event.venue">
+          <ng-container *ngIf="event.venue?.general">
+            <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.VENUE' | translate }}</h3>
+            <a class="hyperlink" [routerLink]="['/locations', event.dates[0].venue.id]">
+              {{ event.venue.general.name }}
+            </a>
+          </ng-container>
+
+          <ng-container *ngIf="event.venue?.address">
+            <p>
+              <ng-container *ngIf="event.venue.address.street">{{ event.venue.address.street }}</ng-container>
+              <ng-container *ngIf="event.venue.address.zipcode">, {{ event.venue.address.zipcode }}</ng-container>
+              <ng-container *ngIf="event.venue.address.city"> {{ event.venue.address.city }}</ng-container>
+            </p>
+          </ng-container>
+
+          <ng-container *ngIf="event.isPermanent || !event.isSameDay && event.dates[0].venue?.openingHours">
+            <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.OPENING_HOURS' | translate }}</h3>
+            <p *ngIf="event.dates[0].venue?.openingHours.hours">
+              {{ event.dates[0].venue?.openingHours.hours }}
+            </p>
+            <p *ngIf="event.dates[0].venue?.openingHours.other">
+              {{ event.dates[0].venue?.openingHours.other }}
+            </p>
+          </ng-container>
+
+          <ng-container *ngIf="event.venue?.address">
+            <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.CONTACT' | translate }}</h3>
+            <dl class="dl-grid">
+              <ng-container *ngIf="event.venue.address.email">
+                <dt>{{ 'INPUT.LABEL.EMAIL' | translate }}:</dt>
+                <dd><a [href]="'mailto:' + event.venue.address.email">{{event.venue.address.email}}</a></dd>
+              </ng-container>
+              <ng-container *ngIf="event.venue.address.telephone">
+                <dt>{{ 'INPUT.LABEL.TELEPHONE' | translate }}:</dt>
+                <dd><a [href]="'tel:' + event.venue.address.telephone">{{event.venue.address.telephone}}</a></dd>
+              </ng-container>
+            </dl>
+          </ng-container>
+
+          <ng-container *ngIf="event.venue?.accessibility && (event.dates[0].venue.accessibility.wheelchair || event.dates[0].venue.accessibility.blind.braille || event.dates[0].venue.accessibility.blind.audioguide || event.dates[0].venue.accessibility.deaf.subtitles || event.dates[0].venue.accessibility.deaf.signLanguage || event.dates[0].venue.accessibility.deaf.hearingAid || event.dates[0].venue.accessibility.deaf.videoguide)">
+            <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.ACCESSIBILITY_VENUE' | translate }}</h3>
+            <ng-container *ngIf="event.dates[0].venue.accessibility.wheelchair">
+              <ion-icon src="assets/icons/accessibility-wheelchair.svg" color="primary"></ion-icon>
+              <ul class="event-detail-list">
+                <li>
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.TITLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.wheelchair?.accessible === 'yes'">
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.YES' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.wheelchair?.accessible === 'no'">
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.NO' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.wheelchair?.accessible === 'limited'">
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.LIMITED' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.wheelchair?.accessible === 'unknown'">
+                  {{ 'TERM.ACCESSIBILITY.WHEELCHAIR.UNKNOWN' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.wheelchair?.description">
+                  {{ event.dates[0].venue.accessibility.wheelchair.description }}
+                </li>
+              </ul>
+            </ng-container>
+            <ng-container *ngIf="event.dates[0].venue.accessibility.blind && (event.dates[0].venue.accessibility.blind.braille || event.dates[0].venue.accessibility.blind.audioguide)">
+              <ion-icon src="assets/icons/accessibility-blind.svg" color="primary"></ion-icon>
+              <ul class="event-detail-list">
+                <li>
+                  {{ 'TERM.ACCESSIBILITY.BLIND.TITLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.blind?.braille">
+                  {{ 'TERM.ACCESSIBILITY.BLIND.BRAILLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.blind?.audioguide">
+                  {{ 'TERM.ACCESSIBILITY.BLIND.AUDIOGUIDE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.blind?.germanLanguage">
+                  {{ 'TERM.ACCESSIBILITY.GERMAN_LANGUAGE.AVAILABLE' | translate }}
+                </li>
+                <li *ngIf="!event.dates[0].venue.accessibility.blind?.germanLanguage">
+                  {{ 'TERM.ACCESSIBILITY.GERMAN_LANGUAGE.NOT_AVAILABLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.blind?.otherLanguages.length > 0">
+                  {{ 'TERM.ACCESSIBILITY.ADDITIONAL_LANGUAGES' | translate }}
+                </li>
+                <li *ngFor="let language of event.dates[0].venue.accessibility.blind.otherLanguages">{{ language }}</li>
+                <li *ngIf="event.dates[0].venue.accessibility.blind?.description">
+                  {{ event.dates[0].venue.accessibility.blind.description }}
+                </li>
+              </ul>
+            </ng-container>
+            <ng-container *ngIf="event.dates[0].venue.accessibility.deaf && (event.dates[0].venue.accessibility.deaf.subtitles || event.dates[0].venue.accessibility.deaf.signLanguage || event.dates[0].venue.accessibility.deaf.hearingAid || event.dates[0].venue.accessibility.deaf.videoguide)">
+              <ion-icon src="assets/icons/accessibility-deaf.svg" color="primary"></ion-icon>
+              <ul class="event-detail-list">
+                <li>
+                  {{ 'TERM.ACCESSIBILITY.DEAF.TITLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.deaf?.videoguide">
+                  {{ 'TERM.ACCESSIBILITY.DEAF.VIDEOGUIDE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.deaf?.hearingAid">
+                  {{ 'TERM.ACCESSIBILITY.DEAF.HEARING_AID' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.deaf?.subtitles">
+                  {{ 'TERM.ACCESSIBILITY.DEAF.SUBTITLES' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.deaf?.signLanguage">
+                  {{ 'TERM.ACCESSIBILITY.DEAF.SIGN_LANGUAGE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.deaf?.germanLanguage">
+                  {{ 'TERM.ACCESSIBILITY.GERMAN_LANGUAGE.AVAILABLE' | translate }}
+                </li>
+                <li *ngIf="event.dates[0].venue.accessibility.deaf?.otherLanguages.length > 0">
+                  {{ 'TERM.ACCESSIBILITY.ADDITIONAL_LANGUAGES' | translate }}
+                </li>
+                <li *ngFor="let language of event.dates[0].venue.accessibility.deaf.otherLanguages">{{ language }}</li>
+                <li *ngIf="event.dates[0].venue.accessibility.deaf?.description">
+                  {{ event.dates[0].venue.accessibility.deaf.description }}
+                </li>
+              </ul>
+            </ng-container>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section tertiary event-detail-section"
+      *ngIf="event.dates.length && event.dates[0].artist">
+      <div class="cell cell--content">
+        <h3 class="event-detail-headline">{{ event.dates[0].artist.general?.name }}</h3>
+        <p [innerHTML]="event.dates[0].artist.general?.description"></p>
+        <ng-container *ngIf="event.dates[0].artist.social">
+          <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.ARTIST_LINKS' | translate }}</h3>
+          <!-- TODO: Add other social media -->
+          <ion-button [href]="event.dates[0].artist.social.website" target="_blank" class="proto-button button-icon button-out"
+            *ngIf="event.dates[0].artist.social.website">
+            <ion-icon src="assets/icons/share.svg"></ion-icon>
+            {{ 'VIEW.EVENT_DETAIL.HOMEPAGE' | translate }}
+          </ion-button>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="section tertiary event-detail-section"
+      #relatedEvents
+      *ngIf="!event.isPermanent && !event.isTimeLimited && event.dates && event.dates.length && event.dates.length > 1">
+      <div class="cell cell--content">
+        <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.ADDITIONAL_DATES' | translate }}</h3>
+        <ul class="additional-events">
+          <li *ngFor="let date of event.dates | slice:1; let i = index;">
+            <p>
+              <proto-event-date
+                [event]="event"
+                [eventDate]="date"
+                [hideAdditionalEvents]="true"></proto-event-date><ng-container *ngIf="date.venue">,</ng-container>
+              <a class="hyperlink"
+                *ngIf="date.venue"
+                [routerLink]="['/locations', date.venue.id]">
+                {{ date.venue.general.name }}
+              </a>
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div *ngIf="mapImage" class="section tertiary event-detail-section">
+      <div class="cell cell--content">
+        <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.MAP' | translate }}</h3>
+        <a [href]="gmapsUrl">
+          <img [src]="mapImage" class="map-image"/>
+        </a>
+
+        <div class="ticket-buttons">
+          <ion-button target="_blank" class="proto-button button-icon button-out"
+            *ngIf="gmapsUrl"
+            [href]="gmapsUrl" target="_blank">
+            <ion-icon src="assets/icons/share.svg"></ion-icon>
+            {{ 'VIEW.EVENT_DETAIL.GOOGLE_MAPS' | translate }}
+          </ion-button>
+
+          <ion-button class="proto-button button-icon button-out"
+            *ngIf="bvgUrl"
+            [href]="bvgUrl" target="_blank">
+            <ion-icon src="assets/icons/share.svg"></ion-icon>
+            {{ 'VIEW.EVENT_DETAIL.BVG' | translate }}
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="event.embeds.length && initialized" class="section">
+      <div class="cell cell--content">
+        <h3 class="event-detail-headline">{{ 'VIEW.EVENT_DETAIL.VIDEO' | translate }}</h3>
+        <div class="video-container"
+          *ngFor="let video of event.embeds; trackBy: trackByFunction"
+          [innerHTML]="getVideoIframe(video.data)"></div>
+      </div>
+    </div>
+
+    <div class="section"
+      *ngIf="event && event.tags[0]">
+      <div class="cell">
+        <related-events
+          [eventId]="event.id"
+          [tagId]="event.tags[0].id">
+          <p>{{ 'EMPTY.RELATED_EVENTS.EVENT' | translate }}</p>
+        </related-events>
+      </div>
+    </div>
+  </ng-container>
+
+  <section class="section secondary section--footer">
+    <div class="cell">
+      <proto-footer></proto-footer>
+    </div>
+  </section>
+
+</ion-content>

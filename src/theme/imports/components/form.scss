@@ -1,0 +1,77 @@
+.form-block {
+  margin-top: var(--proto-space-m);
+}
+
+.form-info-message {
+  margin: var(--proto-space-m) 0;
+}
+
+.form-buttons {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--proto-space-m);
+
+  .hyperlink {
+    display: block;
+    margin: var(--proto-space-xs) 0 var(--proto-space) auto;
+  }
+
+  ion-footer & {
+    padding-top: var(--proto-space-s);
+    padding-bottom: var(--proto-space-s);
+    flex-direction: initial;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.proto-checkbox + .form-buttons, .proto-range + .form-buttons {
+  margin-top: var(--proto-space);
+}
+
+.form {
+  &-section {
+    width: 100%;
+    margin: 0 auto;
+    padding-top: var(--proto-space);
+    @media (min-width: #{$proto-breakpoint-m}) {
+      padding-top: var(--proto-space-l);
+    }
+
+    form {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+  }
+  &-headline {
+    margin: 0 0 var(--proto-space-l);
+    @media (min-width: #{$proto-breakpoint-m}) {
+      font-size: 40px;
+    }
+  }
+  &-input {
+    margin: 0 var(--proto-space) 0 var(--proto-space);
+  }
+  &-button {
+    margin: var(--proto-space-l) var(--proto-space) 0;
+  }
+
+  &-spacer {
+    height: var(--proto-space-l);
+    margin: 0 calc(var(--proto-space) * -1) var(--proto-space);
+    background: var(--ion-color-light);
+
+    @media (min-width: #{$proto-breakpoint-m}) {
+      width: 100%;
+      margin: 0 auto var(--proto-space);
+    }
+  }
+}
+
+.registration-block {
+  padding: var(--proto-space-s) 0 var(--proto-space-l);
+
+  &__paragraph {
+    margin: 0 0 var(--proto-space);
+  }
+}

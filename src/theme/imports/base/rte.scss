@@ -1,0 +1,50 @@
+.rte {
+  padding: var(--proto-space-m);
+
+  &, p {
+    @extend %p;
+  }
+
+  p {
+    margin-top: var(--proto-space);
+    margin-bottom: var(--proto-space-m);
+  }
+
+  p:empty {
+    display: none;
+  }
+
+  a {
+    @extend %hyperlink;
+  }
+
+  ul {
+    margin: var(--proto-space) 0;
+    padding-left: 20px;
+  }
+
+  li {
+    line-height: 1.75;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: var(--proto-space-l);
+    margin-bottom: var(--proto-space);
+    color: var(--ion-color-secondary);
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  &.centered-content {
+    text-align: center;
+
+    ul, ol {
+      list-style: none;
+    }
+  }
+}

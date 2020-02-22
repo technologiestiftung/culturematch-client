@@ -1,0 +1,21 @@
+app-info {
+  display: block;
+}
+.app-info {
+
+  &-list {
+    font-size: 12px;
+    color: var(--ion-color-medium);
+    padding: 0;
+    margin: var(--proto-space-m);
+
+    li {
+      display: flex;
+    }
+  }
+  &-column {
+    margin-bottom: var(--proto-space-s);
+    font-weight: bold;
+    width: 110px;
+  }
+}

@@ -1,0 +1,14 @@
+.proto-range {
+  --padding-end: var(--proto-space-s);
+  --knob-background: var(--ion-color-light);
+  --border-width: 0;
+  --inner-border-width: 0;
+
+  ion-range {
+    padding-top: 0;
+  }
+}
+
+.proto-checkbox.md + .proto-range {
+  margin-top: calc(var(--proto-space-s) * -1);
+}

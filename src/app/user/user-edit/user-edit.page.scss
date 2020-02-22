@@ -1,0 +1,40 @@
+@import 'src/theme/imports/helpers/middle-content';
+@import 'src/helpers';
+@import 'src/base';
+
+.user-edit {
+  &-section {
+    width: 100%;
+    margin: 0 auto;
+    @media (min-width: #{$proto-breakpoint-m}) {
+      width: 75%;
+    }
+  }
+  &-headline {
+    margin: var(--proto-space) var(--proto-space) var(--proto-space-l);
+    @media (min-width: #{$proto-breakpoint-m}) {
+      margin-top: var(--proto-space-l);
+      font-size: 40px;
+    }
+  }
+  &-form {
+    margin: 0 auto;
+    @media (min-width: #{$proto-breakpoint-m}) {
+      width: 50%;
+    }
+  }
+  &-input {
+    margin: 0 var(--proto-space) 0 var(--proto-space);
+  }
+  &-button {
+    margin-top: var(--proto-space-l);
+    margin-bottom: var(--proto-space-l);
+  }
+  &-spacer {
+    width: 100%;
+    height: var(--proto-space-l);
+    margin: 0 auto;
+    margin-bottom: var(--proto-space);
+    background: var(--ion-color-light);
+  }
+}

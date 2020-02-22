@@ -1,0 +1,12 @@
+.infinite-loading {
+  margin-bottom: var(--proto-space);
+
+  ion-spinner {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+ion-infinite-scroll-content {
+  min-height: 60px;
+}

@@ -1,0 +1,52 @@
+.toolbar-searchbar {
+  --border-color: var(--ion-color-shade);
+}
+
+.proto-searchbar {
+
+  ion-toolbar & {
+    display: none;
+    height: 36px;
+    margin-right: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    @include proto-breakpoint-m {
+      display: flex;
+
+      .searchbar-input-container {
+        max-width: 340px;
+      }
+    }
+
+    &.is-visible-for-mobile {
+
+      @media (max-width: #{$proto-breakpoint-m - 1px}) {
+        position: absolute;
+        right: 44px;
+        left: 0;
+        z-index: 1;
+        display: flex;
+        width: initial;
+        max-width: none;
+        padding-right: var(--proto-space-xs);
+        padding-left: 0;
+      }
+    }
+  }
+
+  .searchbar-input {
+    @extend %input;
+  }
+}
+
+.search-close-button {
+  display: none;
+  @media (max-width: #{$proto-breakpoint-m - 1px}) {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    display: block;
+    margin: 0;
+  }
+}

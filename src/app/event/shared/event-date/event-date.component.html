@@ -1,0 +1,83 @@
+<ng-container *ngIf="event.festival && event.festival.general.title">
+  {{ event.festival.general.title }} |
+</ng-container>
+
+<ng-container *ngIf="event.isPermanent">
+  {{ 'TERM.PERMANENT' | translate }}
+
+  <ng-container *ngIf="event.dates.length">
+    |
+    <ng-container *ngIf="isDateToday">
+      {{ 'TERM.TODAY' | translate }},
+      {{ event.dates[0].date.from | amDateFormat: 'HH:mm' }}
+      - {{ event.dates[0].date.to | amDateFormat: 'HH:mm' }}
+      {{ 'TERM.TIME_UNIT' | translate }}
+    </ng-container>
+    <ng-container *ngIf="!isDateToday">
+      {{ event.dates[0].date.from | amDateFormat: 'DD.MM.YYYY, HH:mm' }}
+      - {{ event.dates[0].date.to | amDateFormat: 'HH:mm' }}
+      {{ 'TERM.TIME_UNIT' | translate }}
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="event.isTimeLimited">
+  {{ event.dates[0].date.from | amDateFormat:'DD.MM.YYYY' }}
+  -
+  {{ event.dates[event.dates.length - 1].date.from | amDateFormat:'DD.MM.YYYY' }}
+  |
+  <ng-container *ngIf="isDateToday">
+    {{ 'TERM.TODAY' | translate }},
+    {{ event.dates[0].date.from | amDateFormat: 'HH:mm' }}
+    - {{ event.dates[0].date.to | amDateFormat: 'HH:mm' }}
+    {{ 'TERM.TIME_UNIT' | translate }}
+  </ng-container>
+  <ng-container *ngIf="!isDateToday">
+    {{ event.dates[0].date.from | amDateFormat: 'DD.MM.YYYY, HH:mm' }}
+    - {{ event.dates[0].date.to | amDateFormat: 'HH:mm' }}
+    {{ 'TERM.TIME_UNIT' | translate }}
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!event.isPermanent && !event.isTimeLimited">
+  <ng-container *ngIf="event.isSameDay">
+    <ng-container *ngIf="eventDate.date.from">
+      {{ eventDate.date.from | amDateFormat: 'DD.MM.YYYY, HH:mm' }}
+    </ng-container>
+    <ng-container *ngIf="eventDate.date.to && !event.isSameHour">
+      - {{ eventDate.date.to | amDateFormat: 'HH:mm' }}
+    </ng-container>
+    <ng-container *ngIf="eventDate.date.from || eventDate.date.to">
+      {{ 'TERM.TIME_UNIT' | translate }}
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="!event.isSameDay">
+    <ng-container *ngIf="eventDate.date.from">
+      {{ eventDate.date.from | amDateFormat:'DD.MM.YYYY' }}
+    </ng-container>
+    <ng-container *ngIf="eventDate.date.to">
+      - {{ eventDate.date.to | amDateFormat:'DD.MM.YYYY' }}
+    </ng-container>
+  </ng-container>
+
+  <a ion-anchor *ngIf="relatedEventsClickable && event.dates.length"
+     class="hyperlink"
+    (click)="trigger()">
+    <ng-container *ngIf="!hideAdditionalEvents && event.dates.length === 2">
+      {{ 'TERM.ADDITIONAL_EVENT' | translate: {count: event.dates.length - 1} }}
+    </ng-container>
+    <ng-container *ngIf="!hideAdditionalEvents && event.dates.length > 2">
+      {{ 'TERM.ADDITIONAL_EVENTS' | translate: {count: event.dates.length - 1} }}
+    </ng-container>
+  </a>
+
+  <ng-container *ngIf="!relatedEventsClickable">
+    <ng-container *ngIf="!hideAdditionalEvents && event.dates.length === 2">
+      {{ 'TERM.ADDITIONAL_EVENT' | translate: {count: event.dates.length - 1} }}
+    </ng-container>
+    <ng-container *ngIf="!hideAdditionalEvents && event.dates.length > 2">
+      {{ 'TERM.ADDITIONAL_EVENTS' | translate: {count: event.dates.length - 1} }}
+    </ng-container>
+  </ng-container>
+</ng-container>

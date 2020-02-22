@@ -1,0 +1,38 @@
+.cell {
+  --max-width: 940px;
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--max-width) + 2 * var(--proto-space));
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--proto-space);
+  padding-right: var(--proto-space);
+
+  &--m {
+    --max-width: 1210px;
+  }
+
+  &--s {
+    --max-width: 780px;
+  }
+
+  &--padding-s {
+    padding-left: var(--proto-space-s);
+    padding-right: var(--proto-space-s);
+  }
+
+  &.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // fullscreen
+  &.secondary {
+    --max-width: 100%;
+  }
+
+  &.fullscreen {
+    margin: 0 auto;
+    padding: 0 auto;
+  }
+}

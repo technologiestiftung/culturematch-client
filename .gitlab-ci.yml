@@ -1,0 +1,61 @@
+variables:
+  PROJECT_NAME: "CultureMatchClient"
+  DEV_URL: "culturematch-dev.protoberl.in"
+  STAGING_URL: "culturematch-staging.protoberl.in"
+stages:
+- lint
+- test
+- deploy
+audit:
+ script:
+ - npm i
+ - node bin/npm-audit.js $CI_JOB_URL $CI_PROJECT_NAME $SLACK_WEBHOOK
+ only:
+ - schedules
+lint:
+  stage: lint
+  script:
+  - echo "Linting project"
+  - npm i
+  - npm run check-dependencies
+  - npm run lint
+  tags:
+  - ionic
+  except:
+    - schedules
+test:
+  stage: test
+  script:
+  - echo "Test"
+  tags:
+  - ionic
+  except:
+    - schedules
+deploy_development:
+  stage: deploy
+  script:
+  - source $HOME/.profile
+  - mkdir -p www
+  - echo "Building Ionic 4 app"
+  - npm install
+  - npm run build -- -c=development-prod
+  - echo "Upload to $DEV_URL"
+  - rsync -av --delete --exclude=admin --exclude=src ./www/* deploy@$DEV_URL:/home/deploy/app/client/
+  only:
+  - master
+  tags:
+  - loopback
+deploy_staging:
+  stage: deploy
+  script:
+  - source $HOME/.profile
+  - mkdir -p www
+  - echo "Building Ionic 4 app"
+  - npm install
+  - npm run build -- -c=staging-prod
+  - echo "Upload to $STAGING_URL"
+  - rsync -av --delete --exclude=admin --exclude=src ./www/* deploy@$STAGING_URL:/home/deploy/app/client/
+  only:
+  - tags
+  tags:
+  - loopback

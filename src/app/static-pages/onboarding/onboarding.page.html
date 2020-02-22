@@ -1,0 +1,36 @@
+<ion-header mode="ios">
+  <ion-toolbar mode="ios">
+    <ion-buttons *ngIf="!lastSlideActive" slot="end">
+      <ion-button fill="clear" color="dark" mode="ios" (click)="skip()">
+        {{ 'BUTTON.SKIP' | translate }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <ion-slides #slider pager="true" slot="fixed"
+    [options]="slideOptions"
+    (ionSlideReachEnd)="ionSlideReachEnd()"
+    (ionSlidePrevStart)="ionSlidePrevStart()">
+    <ion-slide *ngFor="let slide of slides">
+      <div class="slide-img">
+        <img src="./assets/img/{{ slide.IMAGE }}" class="cover-img">
+      </div>
+      <div class="slide-content">
+        <h2>{{ slide.TITLE }}</h2>
+        <p>{{ slide.CONTENT }}</p>
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <div class="buttons-onboarding" slot="fixed">
+    <ion-button *ngIf="lastSlideActive" class="button-cta" color="dark" mode="ios"
+      (click)="proceed()">
+      {{ 'BUTTON.SKIP' | translate }}
+    </ion-button>
+    <ion-button *ngIf="lastSlideActive" class="button-cta" color="dark" mode="ios"
+      (click)="proceed(true)">
+      {{ 'BUTTON.CONTINUE' | translate }}
+    </ion-button>
+  </div>
+</ion-content>

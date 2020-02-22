@@ -1,0 +1,25 @@
+<div class="ad-preview-display">
+  <p class="ad-preview-display--name">
+    {{ 'VIEW.AD_PREVIEW.DISPLAY_NAME' | translate: { name: ad.user.displayName } }}
+    <em>
+    {{ ad.eventTitle }}
+    </em>
+  </p>
+  <p class="ad-preview-display--description">
+    {{ ad.description }}
+  </p>
+</div>
+
+<ion-button class="proto-button button-icon button-out"
+  *ngIf="currentUser?.id !== ad.userId"
+  (click)="openNewMessage()">
+  <ion-icon src="assets/icons/comment.svg"></ion-icon>
+  {{ 'BUTTON.CONTACT' | translate }}
+</ion-button>
+
+<ion-button class="proto-button button-icon button-out"
+  *ngIf="currentUser && currentUser.id === ad.userId"
+  (click)="openAdEdit()">
+  <ion-icon name="create"></ion-icon>
+  {{ 'BUTTON.EDIT' | translate }}
+</ion-button>

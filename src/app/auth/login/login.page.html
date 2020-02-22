@@ -1,0 +1,54 @@
+<ion-content>
+  <section class="section form-section has-footer">
+    <div class="cell cell--s">
+
+      <h1 class="h5 form-headline">
+        {{ 'VIEW.LOGIN.TITLE' | translate }}
+      </h1>
+
+      <form class="submit-form" novalidate
+        [formGroup]="loginForm"
+        [ngClass]="{ 'is-disabled': isLoading }"
+        (ngSubmit)="login()">
+        <ion-list class="proto-input-list">
+          <ion-item class="proto-input has-valid-state form-input">
+            <ion-label class="proto-label" position="floating">{{ 'INPUT.LABEL.EMAIL' | translate }}</ion-label>
+            <ion-input type="email" value="" formControlName="email" [placeholder]="'INPUT.PLACEHOLDER.EMAIL' | translate"></ion-input>
+          </ion-item>
+          <proto-show-hide-password
+            formControlName="password"
+            [label]="('INPUT.LABEL.PASSWORD' | translate)"
+            [placeholder]="('INPUT.PLACEHOLDER.PASSWORD' | translate)">
+          </proto-show-hide-password>
+          <ion-button class="proto-button form-button" expand="block" type="submit"
+            [disabled]="!formIsValid() || isLoading">
+            <ion-spinner *ngIf="isLoading"></ion-spinner>
+            <ng-container *ngIf="!isLoading" >
+              {{ 'BUTTON.LOGIN' | translate }}
+            </ng-container>
+          </ion-button>
+          <ion-item lines="none">
+            <a slot="end" class="hyperlink"
+              [routerLink]="['/password-reset']"
+              routerDirection="forward">
+              {{ 'BUTTON.PASSWORD_FORGOTTEN' | translate }}</a>
+          </ion-item>
+        </ion-list>
+      </form>
+      <div class="form-spacer"></div>
+      <div class="registration-block">
+        <p class="registration-block__paragraph">
+          {{ 'VIEW.LOGIN.NOT_REGISTERED_YET' | translate }}
+          <a class="hyperlink" [routerLink]="['/register']" routerDirection="forward">{{ 'BUTTON.REGISTER' | translate }}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section secondary section--footer">
+    <div class="cell">
+      <proto-footer></proto-footer>
+    </div>
+  </section>
+
+</ion-content>

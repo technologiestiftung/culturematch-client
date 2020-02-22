@@ -1,0 +1,69 @@
+<!--
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'VIEW.RESTAURANT_LIST.TITLE' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="proto-button" (click)="openFilterModal()">
+        <ion-icon slot="icon-only" name="options"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar mode="ios" color="primary">
+    <ion-searchbar class="proto-searchbar" (ionChange)="search($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content #ListContent>
+<!--   <ion-refresher mode="ios" slot="fixed" pullFactor="0.3" (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      [pullingText]="'REFRESHER.PULLING_TEXT' | translate"
+      [refreshingText]="'REFRESHER.REFRESHING_TEXT' | translate">
+    </ion-refresher-content>
+  </ion-refresher> -->
+
+  <ion-list class="proto-item-list">
+    <ion-item class="proto-item" detail="true"
+      *ngFor="let location of locations.items; trackBy: trackByFunction"
+      [routerLink]="['/locations', location.id]">
+
+      <ng-container *ngIf="!location.isSkeleton">
+        <ion-label class="ion-text-wrap proto-item__label">
+          <p class="p">{{ location.name }}</p>
+          <small>{{ location.description }}</small> <br>
+          <proto-like [entityId]="location.id" entityType="location"></proto-like>
+        </ion-label>
+      </ng-container>
+
+      <ng-container *ngIf="location.isSkeleton">
+        <ion-thumbnail slot=start>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap proto-item__label">
+          <p class="p">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+          <small>
+            <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+          </small>
+        </ion-label>
+      </ng-container>
+    </ion-item>
+  </ion-list>
+
+  <div class="proto-empty-state"
+    *ngIf="locations.items.length === 0 && !locations.meta.isLoading">
+    <h2 class="proto-empty-state-headline">{{ 'EMPTY.RESTAURANT_LIST.TITLE' | translate }}</h2>
+    <p class="proto-empty-state-message" *ngIf="!searchValue" [innerHTML]="'EMPTY.RESTAURANT_LIST.MESSAGE' | translate"></p>
+    <p class="proto-empty-state-message" *ngIf="searchValue" [innerHTML]="'EMPTY.SEARCH.MESSAGE' | translate: { query: searchValue }"></p>
+  </div>
+
+  <ion-infinite-scroll threshold="150px"
+    [disabled]="!locations.meta.hasMore"
+    (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

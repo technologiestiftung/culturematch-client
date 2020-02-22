@@ -1,0 +1,47 @@
+:root {
+  --proto-space: 16px;
+  --proto-space-xs: 4px;
+  --proto-space-s: 8px;
+  --proto-space-m: 24px;
+  --proto-space-l: 32px;
+  --proto-space-xl: 40px;
+  --proto-space-xxl: 48px;
+
+  --ratio-square: 1;
+  --proto-image-ratio-default: 3.3;
+  --proto-image-ratio-thumbnail: 1;
+  --proto-image-width-avatar: 48px;
+  --proto-image-width-avatar-l: 100px;
+  --proto-image-width-thumbnail: 80px;
+  --proto-image-width-default: 375px;
+  --proto-image-width-placeholder: 15px;
+
+  --proto-media-m: 720px;
+  --proto-media-l: 1200px;
+  --proto-media-xl: 1600px;
+
+  --proto-size-m: 26x;
+  --proto-size-l: 40px;
+  --proto-size-xl: 50px;
+  --proto-size-xxl: 128px;
+
+  --proto-breakpoint-m: 720px;
+  --proto-breakpoint-l: 1200px;
+  --proto-breakpoint-xl: 1600px;
+
+  --header-height: 80px;
+}
+
+$proto-breakpoint-m: 720px;
+$proto-breakpoint-l: 1200px;
+$proto-breakpoint-xl: 1600px;
+
+@mixin proto-breakpoint-m {
+  @media (min-width: #{$proto-breakpoint-m}) { @content; }
+}
+@mixin proto-breakpoint-l {
+  @media (min-width: #{$proto-breakpoint-l}) { @content; }
+}
+@mixin proto-breakpoint-xl {
+  @media (min-width: #{$proto-breakpoint-xl}) { @content; }
+}

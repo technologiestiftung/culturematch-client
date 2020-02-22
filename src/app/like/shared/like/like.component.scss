@@ -1,0 +1,26 @@
+@import 'src/helpers';
+@import 'src/base';
+
+.like {
+  height: 28px;
+  font-size: 14px;
+  text-transform: none;
+  --padding-end: 0;
+
+  &-label {
+    margin-right: var(--proto-space);
+    font-size: 12px;
+
+    &-caption {
+      display: none;
+      @include proto-breakpoint-m {
+        display: block;
+      }  
+    }
+  }
+
+  &-icon {
+    margin-top: -2px;
+    margin-left: var(--proto-space-s);
+  }
+}

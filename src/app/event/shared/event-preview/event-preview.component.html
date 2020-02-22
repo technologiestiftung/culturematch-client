@@ -1,0 +1,42 @@
+<div class="event-preview-banner">
+  <img class="cover-img" [src]="imageUrl" (error)="onImageError()">
+</div>
+
+<div class="event-preview-content">
+  <div class="event-preview-content-row">
+    <div class="event-preview-content-row__badges-container">
+      <ng-container *ngIf="event.dates">
+        <div class="event-preview-content-row__badge"
+          *ngIf="event.dates[0] && event.dates[0].type[0]">
+          {{ event.dates[0].type[0] }}
+        </div>
+        <div class="event-preview-content-row__badge"
+          *ngIf="event.dates[0] && event.dates[0].type[1]">
+          {{ event.dates[0].type[1] }}
+        </div>
+      </ng-container>
+      <div class="event-preview-content-row__badge"
+        *ngIf="event.price?.free">
+        {{ 'TERM.FOR_FREE' | translate }}
+      </div>
+    </div>
+    <div class="event-preview-content-row__like">
+      <proto-like [entityId]="event.id" [entityType]="'event'"></proto-like>
+    </div>
+  </div>
+  <p>{{ 'TERM.PEOPLE_INTERESTED' | translate: { count: event.adCount } }}</p>
+  <proto-event-date class="event-preview-content__date"
+    *ngIf="event.dates && event.dates[0]"
+    [event]="event"
+    [eventDate]="event.dates[0]">
+  </proto-event-date>
+  <h1 class="event-preview-content__name">{{ event.title }}</h1>
+  <ng-container *ngIf="event.venue">
+    <p class="event-preview-content__meta bold">
+      {{ event.venue.general.name }}
+      <ng-container *ngIf="distance">
+        | {{ 'TERM.DISTANCE_IN_KM' | translate: { distance: distance } }}
+      </ng-container>
+    </p>
+  </ng-container>
+</div>

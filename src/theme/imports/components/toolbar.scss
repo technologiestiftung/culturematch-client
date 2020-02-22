@@ -1,0 +1,36 @@
+ion-header {
+
+  ion-title {
+    font-weight: 700;
+  }
+
+  .title-ios {
+    padding-right: var(--proto-space-xxl);
+    padding-left: var(--proto-space-xxl);
+  }
+
+  .title-md {
+    padding-right: var(--proto-space);
+    padding-left: var(--proto-space-m);
+  }
+
+  ion-buttons + .title-md {
+    padding-left: var(--proto-space-xs);
+  }
+
+  .searchbar-input {
+    background: var(--ion-color-primary-shade)!important;
+  }
+}
+
+ion-toolbar {
+
+  &[transparent] {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+  }
+
+  .button {
+    --min-width: 40px;
+  }
+}

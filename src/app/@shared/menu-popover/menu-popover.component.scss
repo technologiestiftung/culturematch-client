@@ -1,0 +1,30 @@
+@import 'src/helpers';
+@import 'src/base';
+
+.proto-item-list {
+  margin: 0;
+  padding: 0;
+
+  ion-list-header {
+    --background: #F8F9FC;
+  }
+}
+
+.menu-popover-item {
+  @extend %p;
+  --padding-start: var(--proto-space-m);
+  --background: white;
+  --background-activated: var(--ion-color-light);
+  --color: var(--ion-color-primary);
+  font-weight: bold;
+
+  &:hover {
+    --background: var(--ion-color-light);
+  }
+}
+
+.mobile-only {
+  @include proto-breakpoint-m {
+    display: none;
+  }
+}

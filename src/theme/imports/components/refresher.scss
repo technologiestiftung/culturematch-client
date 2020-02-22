@@ -1,0 +1,23 @@
+.refresher-ios {
+
+  .refresher-pulling-icon, .refresher-refreshing-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0 auto var(--proto-space-s);
+    color: var(--ion-color-medium);
+    font-size: 24px;
+  }
+
+  .refresher-refreshing-text, .refresher-pulling-text {
+    @extend %small;
+    color: var(--ion-color-medium);
+  }
+
+  .refresher-refreshing-text {
+  }
+
+  ion-spinner {
+    width: 24px;
+    height: 24px;
+  }
+}

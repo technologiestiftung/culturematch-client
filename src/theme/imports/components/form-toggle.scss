@@ -1,0 +1,15 @@
+.proto-toggle {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --inner-border-width: 0;
+
+  margin: var(--proto-space) var(--proto-space-m);
+
+  ion-label {
+    margin: 0 var(--proto-space-s) 0 0;
+  }
+
+  ion-toggle {
+    --background: var(--ion-color-medium);
+  }
+}

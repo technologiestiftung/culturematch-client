@@ -1,0 +1,16 @@
+.proto-button + .proto-button.button-small {
+  margin-top: var(--proto-space);
+}
+
+ion-content {
+  --keyboard-offset: 0px!important;
+}
+
+ion-buttons {
+
+  .proto-button {
+    margin-right: 8px;
+    font-weight: bold;
+    text-transform: none;
+  }
+}

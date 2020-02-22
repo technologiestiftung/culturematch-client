@@ -1,0 +1,45 @@
+{
+  "rules": {
+    "member-access": true,
+    "member-ordering": [true, {"order": "fields-first"}],
+    "no-inferrable-types": true,
+    "no-magic-numbers": true,
+    "curly": true,
+    "no-invalid-this": true,
+    "arrow-parens": true,
+    "class-name": true,
+    "newline-before-return": true,
+    "new-parens": true,
+    "no-consecutive-blank-lines": true,
+    "no-irregular-whitespace": true,
+    "no-console": false,
+    "no-debugger": true,
+    "no-floating-promises": true,
+    "no-unnecessary-class": true,
+    "no-invalid-template-strings": true,
+    "deprecation": true,
+    "indent": [true, "spaces", 2],
+    "max-file-line-count": [true, 500],
+    "max-classes-per-file": [true, 1],
+    "prefer-const": true,
+    "import-spacing": true,
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+    "object-curly-spacing": "always",
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-module",
+      "check-separator",
+      "check-rest-spread",
+      "check-type",
+      "check-typecast",
+      "check-type-operator",
+      "check-preblock"
+    ]
+  },
+  "rulesDirectory": [
+    "node_modules/tslint-eslint-rules/dist/rules"
+  ]
+}

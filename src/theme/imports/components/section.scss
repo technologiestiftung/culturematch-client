@@ -1,0 +1,60 @@
+.section {
+  position: relative;
+  width: 100%;
+
+  &.secondary {
+    background: var(--ion-color-primary);
+  }
+  &.primary-color { //TODO: What's the better naming?
+    background: var(--ion-color-primary);
+  }
+
+  &.tertiary {
+    background: #F6F6F6;
+  }
+
+  &.has-footer {
+    --footer-height: 160px;
+
+    @include proto-breakpoint-m {
+      --footer-height: 182px;
+    }
+
+    min-height: calc(100% - var(--footer-height));
+  }
+
+  &--header {
+    border-bottom: 2px solid white;
+  }
+
+  &__spacer {
+    background: red;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 50%;
+  }
+
+
+  &--footer {
+
+    .cell {
+      --max-width: 940px;
+
+      display: flex;
+      min-height: 160px;
+      padding-top: var(--proto-space);
+      padding-bottom: var(--proto-space);
+
+      @include proto-breakpoint-m {
+        padding-top: var(--proto-space-xxl);
+        padding-bottom: var(--proto-space-xxl);
+      }
+    }
+
+    proto-footer {
+      max-width: 480px;
+      margin-left: auto;
+    }
+  }
+}

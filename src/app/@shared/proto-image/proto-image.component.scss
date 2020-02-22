@@ -1,0 +1,107 @@
+
+// CSS Variables
+// --------------------------------------------------
+
+:host {
+  --proto-image-background: var(--ion-color-medium);
+  --proto-image-border-radius: 0;
+
+  display: block;
+
+  &[slot=start], &[slot=end] {
+    flex: none;
+  }
+
+  &[slot=start] {
+    margin: var(--proto-space, 16px) var(--proto-space, 16px) var(--proto-space, 16px) 0;
+  }
+  &[slot=end] {
+    margin: var(--proto-space, 16px) 0 var(--proto-space, 16px) var(--proto-space, 16px);
+  }
+}
+
+.proto-image {
+
+  &__inner {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: var(--proto-image-background, #ddd);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: var(--proto-image-border-radius);
+
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+    }
+  }
+
+  &-src {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+    opacity: 0;
+    &.has-loaded {
+      opacity: 1;
+    }
+  }
+
+  &-content {
+    z-index: 2;
+  }
+
+  &-title {
+    position: absolute;
+    width: 100%;
+    bottom: 52px;
+  }
+
+  &-banner {
+    &::before {
+      padding-top: calc(100% / var(--proto-image-ratio-banner, 1));
+    }
+  }
+  &-default {
+    &::before {
+      padding-top: calc(100% / var(--proto-image-ratio-default, 1));
+    }
+  }
+  &-thumbnail {
+    max-width: 100%;
+
+    &::before {
+      padding-top: calc(100% / var(--proto-image-ratio-thumbnail, 1));
+    }
+  }
+
+  &-avatar, &-avatar_large {
+    max-width: 100%;
+    border-radius: 50%;
+
+    &::before {
+      padding-top: calc(100% / var(--ratio-avatar, 1));
+    }
+  }
+
+  &-avatar {
+    width: var(--proto-image-width-avatar);
+  }
+
+  &-avatar_large {
+    width: var(--proto-image-width-avatar-l);
+  }
+
+  &-thumbnail {
+    width: var(--proto-image-width-thumbnail);
+  }
+}

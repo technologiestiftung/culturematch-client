@@ -1,0 +1,69 @@
+<ion-app>
+  <ion-header class="section secondary section--header">
+    <ion-toolbar color="primary" class="cell">
+      <div class="menu">
+        <a href="/" class="logo">
+          <img src="./assets/img/logo.png"/>
+        </a>
+        <ion-searchbar mode="ios" class="proto-searchbar" inputmode="search" type="search" showCancelButton="never"
+          [(ngModel)]="searchValue"
+          [ngClass]="{ 'is-visible-for-mobile': searchbarVisibleOnMobile }"
+          (keyup)="onKeyUp($event)"
+          (ionCancel)="searchbarVisibleOnMobile = false"></ion-searchbar>
+        <ion-button color="primary" class="proto-button search-close-button"
+          *ngIf="searchbarVisibleOnMobile"
+          (click)="searchbarVisibleOnMobile = false">
+          <ion-icon class="menu-icon" src="assets/icons/close2.svg" color="light"></ion-icon>
+        </ion-button>
+        <nav class="menu-items">
+          <ion-button class="proto-button button-clear menu-button" [ngClass]="{'menu-button__active' : activeRoute === '/'}"
+            routerLink="/">
+            {{ 'VIEW.MORE.START' | translate }}
+          </ion-button>
+          <ion-button class="proto-button button-clear menu-button" [ngClass]="{'menu-button__active' : activeRoute === '/events'}"
+            routerLink="/events">
+            {{ 'VIEW.MORE.DISCOVER' | translate }}
+          </ion-button>
+          <ion-button class="proto-button button-clear menu-button" [ngClass]="{'menu-button__active' : activeRoute === '/ads/my-ads'}"
+            routerLink="/ads/my-ads"
+            *ngIf="authService.isAuthenticated()">
+            {{ 'VIEW.MORE.MY_ADS' | translate }}
+          </ion-button>
+          <ion-button class="proto-button button-clear menu-button" [ngClass]="{'menu-button__active' : activeRoute === '/conversations'}"
+            routerLink="/conversations"
+            *ngIf="authService.isAuthenticated()">
+            {{ 'VIEW.MORE.CONVERSATIONS' | translate }}
+          </ion-button>
+          <ion-button class="proto-button button-clear menu-button" [ngClass]="{'menu-button__active' : activeRoute === '/likes'}"
+            routerLink="/likes"
+            *ngIf="authService.isAuthenticated()">
+            {{ 'VIEW.MORE.FAVORITES' | translate }}
+          </ion-button>
+          <ion-button class="proto-button button-clear menu-button" [ngClass]="{'menu-button__active' : activeRoute === '/login'}"
+            routerLink="/login"
+            *ngIf="!authService.isAuthenticated()">
+            {{ 'BUTTON.LOGIN' | translate }}
+          </ion-button>
+          <ion-button class="proto-button button-clear menu-button" [ngClass]="{'menu-button__active' : activeRoute === '/profile'}"
+            routerLink="/profile"
+            *ngIf="authService.isAuthenticated()">
+            {{ 'BUTTON.PROFILE' | translate }}
+          </ion-button>
+          <ion-button class="proto-button button-clear mobile-only"
+            *ngIf="!searchbarVisibleOnMobile"
+            (click)="searchbarVisibleOnMobile = true">
+            <ion-icon class="menu-icon" src="assets/icons/search.svg" color="light"></ion-icon>
+          </ion-button>
+          <ion-button color="light" class="proto-button button-clear"
+            *ngIf="router.url !== '/more'"
+            (click)="presentMenuPopover($event)">
+            <ion-icon class="menu-icon" src="assets/icons/more.svg" color="light"></ion-icon>
+          </ion-button>
+        </nav>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-router-outlet class="main-router-outlet"></ion-router-outlet>
+
+</ion-app>

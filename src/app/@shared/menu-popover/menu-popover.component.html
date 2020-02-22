@@ -1,0 +1,37 @@
+
+<ion-list class="proto-item-list" lines="none">
+  <ion-item mode="ios" class="proto-item menu-popover-item mobile-only" tappable
+    (click)="navigateTo('/')">
+    {{ 'VIEW.MORE.START' | translate }}
+  </ion-item>
+  <ion-item mode="ios" class="proto-item menu-popover-item mobile-only" tappable
+    (click)="navigateTo('/events')">
+    {{ 'VIEW.MORE.DISCOVER' | translate }}
+  </ion-item>
+  <ion-item mode="ios" class="proto-item menu-popover-item mobile-only" tappable
+    *ngIf="authService.isAuthenticated()"
+    (click)="navigateTo('/likes')">
+    {{ 'VIEW.MORE.FAVORITES' | translate }}
+  </ion-item>
+  <ion-item mode="ios" class="proto-item menu-popover-item" tappable
+    (click)="navigateTo('/imprint')">
+    {{ 'VIEW.MORE.IMPRINT' | translate }}
+  </ion-item>
+  <ion-item mode="ios" class="proto-item menu-popover-item" tappable
+    (click)="navigateTo('/agreements/privacy')">
+    {{ 'VIEW.MORE.PRIVACY' | translate }}
+  </ion-item>
+  <ion-list-header></ion-list-header>
+  <proto-language-switch></proto-language-switch>
+  <ion-list-header></ion-list-header>
+  <ion-item mode="ios" class="proto-item menu-popover-item" tappable
+    *ngIf="!authService.isAuthenticated()"
+    (click)="navigateTo('/login')">
+    {{ 'BUTTON.LOGIN' | translate }}
+  </ion-item>
+  <ion-item mode="ios" class="proto-item menu-popover-item" tappable
+  *ngIf="authService.isAuthenticated()"
+    (click)="logout()">
+    {{ 'BUTTON.LOGOUT' | translate }}
+  </ion-item>
+</ion-list>

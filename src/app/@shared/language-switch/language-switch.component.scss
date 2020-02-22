@@ -1,0 +1,33 @@
+@import 'src/helpers';
+@import 'src/base';
+
+.proto-input--select {
+  margin: 0;
+  --padding-end: 6px;
+  --padding-start: 6px;
+  --background: white;
+  --background-activated: var(--ion-color-light);
+
+  &:hover {
+    --background: var(--ion-color-light);
+    background: var(--ion-color-light);
+  }
+
+  ion-label {
+    @extend %p;
+    --color: var(--ion-color-primary);
+    padding-left: var(--proto-space);
+    font-weight: bold;
+  }
+
+  ion-select {
+    flex: 1;
+    max-width: none;
+    padding-right: 14px;
+    padding-left: 0;
+    font-size: 14px;
+    text-align: right;
+  }
+}
+
+

@@ -1,0 +1,25 @@
+<ion-header mode="ios">
+  <ion-toolbar mode="ios">
+    <ion-buttons mode="ios" slot="start">
+      <ion-back-button mode="ios" icon="ios-arrow-round-back" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title mode="ios">{{ 'VIEW.AD_EDIT.TITLE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form class="edit-form" novalidate [formGroup]="editForm" (ngSubmit)="save()">
+    <ion-list mode="ios" class="proto-input-list">
+      <ion-item class="proto-input has-valid-state">
+        <ion-label position="floating">{{ 'INPUT.LABEL.DESCRIPTION' | translate }}</ion-label>
+        <ion-textarea formControlName="description" [placeholder]="'INPUT.PLACEHOLDER.DESCRIPTION' | translate"></ion-textarea>
+      </ion-item>
+
+      <ion-button class="proto-button" expand="block"
+        [disabled]="!editFormIsValid()"
+        (click)="save()">
+        {{ 'BUTTON.SAVE' | translate }}
+      </ion-button>
+    </ion-list>
+  </form>
+</ion-content>

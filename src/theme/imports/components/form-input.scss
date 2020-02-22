@@ -1,0 +1,172 @@
+.proto-input {
+  --min-height: 56px;
+  --background: var(--ion-color-light);
+  --background-activated: var(--ion-color-light-shade);
+  --background-focused: var(--ion-color-light);
+  --border-radius: 4px;
+  --border-color: var(--ion-border-color);
+  --border-style: solid;
+  --border-width: 1px;
+  --inner-border-width: 0;
+  --ion-placeholder-color: var(--ion-color-medium);
+  --full-highlight-height: 0;
+
+  margin: var(--proto-space) var(--proto-space);
+
+  --background: white;
+  --background-activated: white;
+  --background-focused: white;
+
+  .label-floating, .native-input, ion-select, ion-datetime {
+    @extend %input;
+  }
+
+  &.item-has-placeholder .label-floating, .label-floating {
+    --color: var(--ion-color-medium);
+    margin-top: 0;
+    transform: translateY(18px);
+  }
+
+  &.item-has-placeholder ::placeholder {
+    opacity: 0;
+    transition: opacity .3s;
+  }
+
+  .label-floating + ion-input, .label-floating + ion-select, .label-floating + ion-datetime {
+    --padding-top: 2px;
+    --padding-bottom: 6px;
+  }
+
+
+  // -------------------------------------
+  //   handling input states
+  // -------------------------------------
+
+  &.item-has-value, &.item-has-focus, &.ion-focused, &--select.item-has-placeholder {
+    --border-color: var(--ion-color-dark-tint);
+
+    .label-floating {
+      color: var(--ion-color-medium);
+
+      transform: translateZ(0) translateY(8px) scale(.8);
+    }
+
+    ::placeholder {
+      opacity: .5;
+    }
+  }
+
+  &.ion-dirty.ion-touched {
+
+    // not every input needs a valid state styling (e.g. ion-select)
+    &.ion-valid.has-valid-state {
+      --border-color: var(--ion-color-success);
+    }
+
+    &.ion-invalid {
+      --border-color: var(--ion-color-danger);
+    }
+  }
+
+  ion-input:focus, .text-input {
+    outline: none;
+  }
+
+
+  // -------------------------------------
+  //   ion-select custom styling
+  // -------------------------------------
+
+  &--select {
+    --inner-padding-end: var(--proto-space);
+    --background-hover: var(--background-activated);
+
+    ion-select, ion-datetime {
+      padding-bottom: 8px;
+    }
+
+    &.activated {
+      .select-arrow {
+        background: var(--background-activated);
+      }
+    }
+
+    .label-floating {
+      transition: none;
+    }
+  }
+
+  .select-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    width: 40px;
+    height: 100%;
+    color: var(--ion-color-primary);
+    border-radius: var(--border-radius);
+    background: var(--background);
+    transition: var(--transition);
+    pointer-events: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: var(--proto-space);
+      width: 0px;
+      height: 0px;
+      color: currentcolor;
+      border-top: 6px solid;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
+      transform: translateY(-50%);
+    }
+  }
+
+  &--datetime {
+    .mat-input {
+      @extend %stretched-container;
+      left: -17px;
+      width: calc(100% + 17px);
+      margin: 0;
+      padding: 22px 0 0 17px;
+      background: none;
+      border: 0;
+      outline: none;
+      cursor: pointer;
+
+
+      &::placeholder {
+        color: var(--ion-color-medium);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+
+
+// https://stackoverflow.com/questions/6317761/pressing-enter-submits-html-form-with-one-input-but-not-two
+// Submit form via enter key
+
+.hidden-submit-button {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+// https://css-tricks.com/snippets/css/change-autocomplete-styles-webkit-browsers/
+// Change Autocomplete Styles in WebKit Browsers
+
+:-webkit-autofill,
+:-webkit-autofill:hover,
+:-webkit-autofill:focus {
+  -webkit-text-fill-color: #777;
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}

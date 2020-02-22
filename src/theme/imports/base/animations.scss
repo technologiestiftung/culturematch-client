@@ -1,0 +1,65 @@
+.animate-if-visible {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: transform .3s, opacity .3s;
+  &.is-visible {
+    pointer-events: initial;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-in-out {
+  animation: fade 2s;
+}
+
+@keyframes fade {
+  0%, 20%, 100% { opacity: 0 }
+  40%, 80% { opacity: 1 }
+}
+
+// splash animation
+.splash-overlay {
+  @extend %stretched-container;
+  pointer-events: none;
+
+  img {
+    @extend %object-fit;
+    @extend %middle-self;
+    display: block;
+    width: 150%;
+    height: 150%;
+    object-fit: cover;
+    opacity: 0;
+    transform: translate(-50%, - 50%) scale(.667);
+    transform-origin: center center;
+    transition: transform .5s;
+    will-change: transform;
+  }
+
+  &.is-active {
+    img {
+      opacity: 1;
+    }
+  }
+
+  .page-ready & {
+    opacity: 0;
+    img {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+}
+
+.plt-cordova {
+  .splash-overlay {
+    transition: opacity .5s;
+    transition-delay: .3s;
+
+    img {
+      transition: transform .5s;
+      transition-delay: .3s;
+    }
+  }
+}

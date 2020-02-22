@@ -1,0 +1,26 @@
+<ion-content>
+
+  <div class="section own-ads-list--section-spacer">
+  </div>    
+
+  <div class="section">
+    <div class="cell">
+
+    <ion-list mode="ios" class="section own-ads-list--list">
+      <h2>{{ 'VIEW.ADS.MY.TITLE' | translate }}</h2>
+      <proto-ad-preview
+        *ngFor="let ad of ads.items; trackBy: trackByFunction"
+        [ad]="ad">
+      </proto-ad-preview>
+    </ion-list>
+
+    <ion-infinite-scroll threshold="250px"
+      (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    </div>
+  </div>
+</ion-content>

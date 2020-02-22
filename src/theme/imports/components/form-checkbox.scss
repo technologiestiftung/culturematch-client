@@ -1,0 +1,57 @@
+.proto-checkbox {
+  --padding-start: var(--proto-space-m);
+  --padding-end: var(--proto-space);
+  --background-activated: var(--ion-background-color);
+  --inner-border-width: 0;
+
+  &.md {
+    ion-checkbox {
+      margin-top: var(--proto-space);
+    }
+
+    .proto-checkbox-label {
+      margin-top: 15px;
+    }
+  }
+
+  ion-checkbox {
+    align-self: flex-start;
+    margin-right: var(--proto-space);
+  }
+
+  .proto-checkbox-label {
+    @extend %input;
+    font-size: 13px;
+
+    pointer-events: none;
+    position: relative;
+    z-index: 2;
+    align-self: flex-start;
+    margin-top: 12px;
+
+    &.has-columns {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &.is-inactive {
+      opacity: .5;
+    }
+
+    &__col {
+      margin: 0;
+      color: var(--ion-text-color);
+      letter-spacing: initial;
+
+      &:last-child {
+        font-weight: bold;
+      }
+    }
+
+    a {
+      --proto-font-size: 13px;
+      pointer-events: initial;
+    }
+  }
+}

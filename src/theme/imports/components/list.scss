@@ -1,0 +1,14 @@
+.proto-item-list {
+  margin: 0 0 var(--proto-space);
+
+  ion-list-header {
+    @extend %p;
+    --background: var(--ion-background-color);
+    min-height: var(--proto-space);
+  }
+}
+
+.proto-input-list {
+  margin: 0;
+  padding: 0;
+}

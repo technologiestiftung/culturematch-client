@@ -1,0 +1,8 @@
+// NewMessageComponent
+.new-message {
+  &,
+  &__name,
+  &__description {
+    padding: var(--proto-space-m);
+  }
+}

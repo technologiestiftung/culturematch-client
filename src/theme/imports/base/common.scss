@@ -1,0 +1,57 @@
+.keyboard-will-show {
+  ion-content {
+    --keyboard-offset: var(--keyboard-height, 290px)!important;
+  }
+
+  .no-tabbar {
+    --keyboard-offset: calc(var(--keyboard-height, 290px) - var(--ion-safe-area-bottom))!important;
+  }
+
+  .no-keyboard-padding {
+    --keyboard-offset: 0!important;
+  }
+}
+
+.proto-empty-state {
+  margin: var(--proto-space);
+
+  h2 {
+    margin-bottom: var(--proto-space-m);
+  }
+}
+
+.proto-spinner {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: var(--proto-space-l) auto;
+
+  .button & {
+    margin: 0;
+  }
+}
+
+// hide scrollbar by default
+::-webkit-scrollbar {
+  display: none;
+}
+
+.header-md:after {
+  display: none;
+}
+
+.ion-page > ion-content {
+  --offset-bottom: -80px!important;
+  top: 80px;
+
+  ion-modal & {
+    --offset-bottom: 0px!important;
+    top: 0px;
+  }
+}
+
+@media only screen and (min-height: 720px) and (min-width: 720px) {
+  .filter-modal {
+    --height: 650px;
+  }
+}

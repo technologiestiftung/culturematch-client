@@ -1,0 +1,46 @@
+@import 'src/helpers';
+
+ion-header {
+  ion-button {
+    --color: var(--ion-color-dark);
+    text-transform: uppercase;
+  }
+}
+
+ion-slides {
+  --bullet-background: var(--ion-color-medium);
+  --bullet-background-active: var(--ion-color-dark);
+  height: calc(100% - var(--proto-space) - env(safe-area-inset-bottom));
+}
+
+ion-slide {
+  flex-direction: column;
+}
+
+.slide-img {
+  @include cover(375, 290, transparent);
+  width: 100%;
+}
+
+.slide-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: var(--proto-space-l) var(--proto-space-s);
+
+  h2 {
+    margin-bottom: var(--proto-space-m);
+  }
+}
+
+.buttons-onboarding {
+  position: absolute;
+  left: 50%;
+  bottom: var(--proto-space);
+  bottom: calc(var(--proto-space) + env(safe-area-inset-bottom));
+  z-index: 2;
+  margin: 0;
+  transform: translateX(-50%);
+}

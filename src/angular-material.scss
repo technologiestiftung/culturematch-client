@@ -1,0 +1,28 @@
+@import '~@angular/material/theming';
+
+// Include non-theme styles for core.
+@include mat-core();
+
+// Define your application's custom theme.
+$primary: mat-palette($mat-grey, 900);
+$accent:  mat-palette($mat-pink, A200, A100, A400);
+$theme: mat-light-theme($primary, $accent);
+// Include theme styles for your custom components.
+@include mat-datepicker-theme($theme);
+
+.mat-icon-button {
+  background: transparent;
+}
+
+.cdk-overlay-backdrop {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+
+.mat-button {
+  background: transparent;
+}
+
+.cdk-overlay-backdrop {
+  background: rgba(0, 0, 0, 0.2);
+}

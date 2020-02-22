@@ -1,0 +1,69 @@
+<ion-content>
+
+  <section class="section form-section has-footer">
+    <div class="cell cell--s">
+
+      <h1 class="h5 form-headline">
+        {{ 'VIEW.REGISTER.TITLE' | translate }}
+      </h1>
+
+      <form class="submit-form" novalidate
+        [formGroup]="registerForm"
+        [ngClass]="{ 'is-disabled': isLoading }"
+        (ngSubmit)="register()">
+        <ion-list class="proto-input-list">
+          <ion-item class="proto-input has-valid-state">
+            <ion-label position="floating">{{ 'INPUT.LABEL.DISPLAY_NAME' | translate }}</ion-label>
+            <ion-input type="text" value="" formControlName="displayName" [placeholder]="'INPUT.PLACEHOLDER.DISPLAY_NAME' | translate"></ion-input>
+          </ion-item>
+
+          <ion-item class="proto-input has-valid-state">
+            <ion-label position="floating">{{ 'INPUT.LABEL.EMAIL' | translate }}</ion-label>
+            <ion-input type="email" value="" formControlName="email" [placeholder]="'INPUT.PLACEHOLDER.EMAIL' | translate"></ion-input>
+          </ion-item>
+
+          <proto-show-hide-password
+            formControlName="password"
+            [label]="('INPUT.LABEL.PASSWORD' | translate)"
+            [placeholder]="'INPUT.PLACEHOLDER.PASSWORD_REQUIREMENTS' | translate: { min: passwordMinLength }">
+          </proto-show-hide-password>
+
+          <ion-item class="proto-checkbox" handle-internal-links>
+            <ion-checkbox formControlName="privacyConsent"></ion-checkbox>
+            <ion-label class="ion-text-wrap proto-checkbox-label" [innerHTML]="'INPUT.LABEL.PRIVACY_CONSENT' | translate"></ion-label>
+          </ion-item>
+
+          <ion-item class="proto-checkbox" handle-internal-links>
+            <ion-checkbox formControlName="termsConsent"></ion-checkbox>
+            <ion-label class="ion-text-wrap proto-checkbox-label" [innerHTML]="'INPUT.LABEL.TERMS_CONSENT' | translate"></ion-label>
+          </ion-item>
+
+          <ion-button class="proto-button form-button" expand="block" type="submit"
+            [disabled]="!formIsValid() || isLoading">
+            <ion-spinner *ngIf="isLoading"></ion-spinner>
+            <ng-container *ngIf="!isLoading" >
+              {{ 'BUTTON.REGISTER' | translate }}
+            </ng-container>
+          </ion-button>
+        </ion-list>
+      </form>
+
+      <div class="form-spacer"></div>
+
+      <div class="registration-block">
+        <p class="registration-block__paragraph">
+          {{ 'VIEW.REGISTER.ALREADY_REGISTERED' | translate }}
+          <a class="hyperlink" [routerLink]="['/login']" routerDirection="forward">{{ 'BUTTON.LOGIN' | translate }}</a>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section secondary section--footer">
+    <div class="cell">
+      <proto-footer></proto-footer>
+    </div>
+  </section>
+
+</ion-content>

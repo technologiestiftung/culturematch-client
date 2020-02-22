@@ -1,0 +1,95 @@
+<ion-content>
+  <section class="section section--highlights">
+    <div class="cell cell--m no-padding">
+      <div class="event-preview-list event-preview-list--highlights">
+
+        <div class="teaser highlight">
+          <div class="event-preview-banner">
+            <img class="cover-img" src="assets/img/culturematch-header-0.jpg">
+            <div class="event-preview-title-wrapper">
+              <h2 class="event-preview-title"
+                [innerHTML]="'TERM.PEOPLE_INTERESTED_IN' | translate: { count: adCount }">
+              </h2>
+              <a class="event-preview-link"
+                [routerLink]="['/events']"
+                [queryParams]="{ activeSegment: 'find' }">
+                <ion-icon src="./assets/icons/chevron-next.svg"></ion-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="teaser highlight">
+          <div class="event-preview-banner">
+            <img class="cover-img" src="assets/img/culturematch-header-1.jpg">
+            <div class="event-preview-title-wrapper">
+              <h2 class="event-preview-title"
+                [innerHTML]="'TERM.PEOPLE_INTERESTED_IN2' | translate">
+              </h2>
+              <a class="event-preview-link"
+                [routerLink]="['/events']"
+                [queryParams]="{ activeSegment: 'create' }">
+                <ion-icon src="./assets/icons/chevron-next.svg"></ion-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--categories">
+    <div class="cell">
+      <div class="event-preview-list event-preview-list--category">
+
+        <div class="teaser category"
+          *ngFor="let tag of tags; let i = index"
+           [routerLink]="['/events']"
+           [queryParams]="{ tagIds: [tag.id] }">
+          <div class="event-preview-banner"
+           [ngClass]="'category' + (i + 1)">
+            <div class="event-preview-title-wrapper">
+              <h2 class="event-preview-title">
+                {{ tag.name }}
+              </h2>
+              <h4 class="event-preview-subline"
+                [innerHTML]="'TERM.PEOPLE_INTERESTED_IN3' | translate: { count: tagsCount[tag.id] }">
+              </h4>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section"
+    *ngIf="eventsThisWeek?.items?.length">
+    <div class="cell">
+      <h3 class="section-headline">
+        {{ 'VIEW.HOME.EVENTS_THIS_WEEK' | translate }}
+        <a class="more-link"
+          [routerLink]="['/events']"
+           [queryParams]="{ 'dateTo': nextSunday }">
+          {{ 'VIEW.HOME.MORE_EVENTS_THIS_WEEK' | translate }}
+          <ion-icon src="./assets/icons/chevron-next-inverted.svg"></ion-icon>
+        </a>
+      </h3>
+      <div class="event-preview-list event-preview-list--this-week">
+        <proto-match-event-preview class="default"
+          *ngFor="let event of eventsThisWeek.items | slice:0:6"
+          [event]="event"
+          [currentPosition]="currentPosition"
+          [routerLink]="['/events', event.id]">
+        </proto-match-event-preview>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--footer">
+    <div class="cell">
+      <proto-footer></proto-footer>
+    </div>
+  </section>
+
+</ion-content>
+

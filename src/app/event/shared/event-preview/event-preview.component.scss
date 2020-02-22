@@ -1,0 +1,220 @@
+@import 'src/helpers';
+@import 'src/base';
+
+@mixin shifted-border($width, $shift-x, $shift-y, $color) {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: 108px;
+    transform: translateX($shift-x) translateY($shift-y);
+    background: $color;
+    // z-index: -1;
+  }
+}
+
+.event-preview-content {
+  &-row {
+    &__badges-container {
+      position: absolute;
+      top: 0;
+      display: flex;
+      flex-wrap: wrap;
+      z-index: 1;
+    }
+    &__badge {
+      @extend %button;
+      @extend %middle-content;
+      height: 20px;
+      margin: 0 var(--proto-space-s) var(--proto-space-s);
+      padding: var(--proto-space-s) var(--proto-space);
+      color: var(--ion-color-secondary-contrast);
+      font-weight: 600;
+      background: var(--ion-color-primary);
+    }
+    &__like {
+      @extend %teaser;
+      color: var(--ion-color-primary);
+    }
+  }
+
+  &__meta {
+    + .event-preview-content__meta {
+      margin-top: var(--proto-space-s);
+    }
+  }
+}
+
+:host {
+  position: relative;
+  outline: none;
+  cursor: pointer;
+
+  .bold {
+    font-weight: bold;
+  }
+
+  &:hover {
+    .event-preview-content__name {
+      color: var(--ion-color-primary);
+    }
+  }
+
+  .event-preview-content__meta {
+    @extend %ellipsis;
+  }
+
+  .cover-img {
+    z-index: 1;
+    overflow: hidden;
+    text-indent: -100%;
+    background: #eee;
+  }
+
+  &.primary {
+    @include cover(350, 200, black, linear-gradient(to bottom, rgba(0,0,0,0) 0.07%, rgba(0,0,0,0.75) 79.48%));
+
+    .event-preview-banner {
+      @extend %stretched-container;
+    }
+
+    .event-preview-content {
+      @extend %stretched-container;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--proto-space);
+      color: var(--ion-color-secondary-contrast);
+
+      text-shadow:0px 0px 4px rgba(0,0,0,0.5);
+
+      &__name {
+        @include line-clamp(35px, 1.25, 2);
+        @extend %h3;
+        margin-bottom: var(--proto-space-s);
+        color: white;
+      }
+
+      &__date, &__meta {
+        @extend %teaser;
+      }
+
+
+      &-row {
+        &__like {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &.secondary {
+    .event-preview-banner {
+      @include cover(3, 2, black);
+    }
+    .event-preview-content {
+      width: 100%;
+
+      &__name {
+        @include line-clamp(40px, 1.25, 2);
+        @include proto-breakpoint-m {
+          line-height: 44px;
+        }
+        @extend %h2;
+        margin: 8px 0 8px 0;
+      }
+
+      &__date {
+        @extend %teaser;
+        margin: 8px 0 8px 0;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      &-row {
+        margin: 8px 0 8px 0;
+        &__like {
+          width: 100%;
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  &.tertiary {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--proto-space-xs) 0;
+
+    padding-bottom: var(--proto-space);
+    border-bottom: 2px solid var(--ion-color-light);
+
+    @media (min-width: 720px) {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .event-preview-banner {
+      @include cover(3,2, transparent);
+      @include shifted-border(160px, var(--proto-space-s), var(--proto-space-s), var(--ion-color-primary));
+      width: 160px;
+      margin: 20px var(--proto-space-s) var(--proto-space-s) var(--proto-space);
+      overflow: visible;
+    }
+    .event-preview-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      min-width: 1px;
+      margin: var(--proto-space);
+
+      &-row {
+        @extend %middle-content;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: var(--proto-space);
+
+        &__badges-container {
+          position: initial;
+        }
+
+        &__badge {
+          position: initial;
+          margin-left: 0;
+        }
+
+        &__like {
+          margin-left: auto;
+        }
+      }
+
+      &__date {
+        margin-bottom: var(--proto-space-xs);
+        font-weight: bold;
+      }
+
+      &__name {
+        @include line-clamp(30px, 1.25, 2);
+        @extend %h4;
+        margin-bottom: var(--proto-space-s);
+      }
+
+      &__meta {
+        width: 100%;
+      }
+    }
+  }
+
+  &.full-image {
+    .event-preview-banner {
+      width: calc(100% - var(--proto-space-l));
+      @include cover(3,2, transparent);
+    }
+  }
+
+}

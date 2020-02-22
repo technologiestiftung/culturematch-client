@@ -1,0 +1,15 @@
+<div class="conversation-preview-display">
+  <h3 class="conversation-preview-display--event">
+    {{ conversation.ad.eventTitle }}
+  </h3>
+  <p class="conversation-preview-display--name">
+    {{ conversation.lastMessage.senderId === currentUser.id ? 'Du' : conversation.counterpart.displayName }}: {{ conversation.lastMessage.content }}
+  </p>
+  <p>
+    {{ conversation.lastMessageAt | amDateFormat: 'DD.MM.YYYY, HH:mm' }} Uhr
+  </p>
+</div>
+
+<ion-button class="conversation-preview-button">
+  <ion-icon src="assets/icons/comment-primary.svg" color="white"></ion-icon>
+</ion-button>

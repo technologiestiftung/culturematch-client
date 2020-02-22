@@ -1,0 +1,19 @@
+.like-list {
+  &-segment {
+    &--button {
+      --background: var(--ion-color-light-tint);
+      --background-checked: transparent;
+      --indicator-color-checked: transparent;
+      border-bottom: 4px solid transparent;
+      &__active {
+        border-bottom: 4px solid var(--ion-color-primary);
+      }
+    }
+  }
+}
+
+.load-more-button {
+  display: block;
+  max-width: 280px;
+  margin: var(--proto-space) auto;
+}

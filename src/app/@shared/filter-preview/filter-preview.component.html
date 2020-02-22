@@ -1,0 +1,45 @@
+<ion-button class="proto-button button-round button-clear filter-button" (click)="onFilterIconClicked()">
+  <div class="proto-button button-round button-clear filter-button-background">
+    <ion-icon class="filter-button-icon" name="options"></ion-icon>
+  </div>
+</ion-button>
+
+<div class="filter-message"
+  *ngIf="!filter"
+  [innerHTML]="sentence.filter"
+  [routerLink]="sentence.link[0]"
+  [queryParams]="sentence.link[1]">
+</div>
+
+<div class="filter-message"
+  *ngIf="isFilterEmpty">
+  {{ 'VIEW.FILTER_PREVIEW.HEADLINE_' + activeSegment.toUpperCase() | translate }}
+</div>
+
+<div class="filter-message"
+  *ngIf="filter && !isFilterEmpty">
+  <span>{{ 'VIEW.FILTER_PREVIEW.HEADLINE' | translate }}</span>
+  <span *ngIf="filter.dateFrom">&nbsp;{{ 'VIEW.FILTER_PREVIEW.DATE_FROM' | translate }}</span>
+  <span *ngIf="filter.dateFrom">&nbsp;{{ filter.dateFrom | date:'dd.MM.yyyy' }}</span>
+
+  <span *ngIf="filter.dateTo">&nbsp;{{ 'VIEW.FILTER_PREVIEW.DATE_TO' | translate }}</span>
+  <span *ngIf="filter.dateTo">&nbsp;{{ filter.dateTo | date:'dd.MM.yyyy' }}</span>
+
+  <span *ngIf="filter.targetAudience">&nbsp;{{ 'VIEW.FILTER_PREVIEW.AUDIENCE' | translate }}</span>
+  <span *ngFor="let audience of filter.targetAudience; let i = index"><span *ngIf="i > 0">,</span>&nbsp;<u>{{ audience }}</u></span>
+
+  <span *ngIf="filter.tags">&nbsp;{{ 'VIEW.FILTER_PREVIEW.INTEREST' | translate }} <u>{{ tagsString }}</u></span>
+
+  <span *ngIf="filter.priceRange">&nbsp;{{ 'VIEW.FILTER_PREVIEW.PRICE_RANGE' | translate }}</span>
+  <span *ngFor="let price of filter.priceRange; let i = index"><span *ngIf="i > 0">,</span>&nbsp;<u>{{ 'FILTER.PRICE_RANGE.' + price | translate}}</u></span>
+
+  <span *ngIf="filter.time">&nbsp;{{ 'VIEW.FILTER_PREVIEW.TIME' | translate }}</span>
+  <span *ngFor="let time of filter.time; let i = index"><span *ngIf="i > 0">,</span>&nbsp;<u>{{ 'FILTER.TIME.' + time | translate }}</u></span>
+
+  <span *ngIf="filter.radius">&nbsp;{{ 'VIEW.FILTER_PREVIEW.NEAR' | translate }} <u>{{ filter.radius }} {{ 'FILTER.DISTANCE.UNIT' | translate }}</u></span>
+</div>
+
+<div class="filter-arrow-button">
+  <ion-icon class="filter-arrow-button-icon"
+    src="assets/icons/forward.svg"></ion-icon>
+</div>

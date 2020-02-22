@@ -1,0 +1,9 @@
+<div class="proto-image__inner {{ 'proto-image-' + imageType }}">
+  <img class="proto-image-src"
+    #imageSrc
+    [ngClass]="{'has-loaded': hasLoaded }"
+    [attr.data-src]="largeImage || ''"/>
+  <ng-content select=".proto-image-content"></ng-content>
+  <ng-content select=".proto-image-action"></ng-content>
+</div>
+<ng-content select=".proto-image-touch-target"></ng-content>

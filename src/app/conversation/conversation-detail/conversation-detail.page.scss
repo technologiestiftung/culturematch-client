@@ -1,0 +1,61 @@
+@import 'src/theme/imports/helpers/middle-content';
+@import 'src/helpers';
+@import 'src/base';
+
+:host {
+}
+
+.conversation-detail {
+  &--section-spacer {
+    width: 100%;
+    height: 100px;
+    background: #F2F2F2;
+    margin-top: var(--proto-space-xl);
+  }
+  &--info {
+  }
+  &--content {
+    margin-top: calc(-1 * var(--proto-space-xxl));    
+    padding-top: calc(1 * var(--proto-space-l));
+    background: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+  &--list {
+    background: transparent;
+    width: 100%;
+    @media (min-width: #{$proto-breakpoint-m}) {
+      width: 50%;
+    }
+  }
+  &--message {
+    width: 100%;
+    &-sender {
+      width: 100%;
+      text-align: right;
+      padding-right: var(--proto-space);
+      color: var(--ion-color-primary);
+      font-weight: bold;
+    }
+    &-time {
+      color:#999999;
+      font-weight: bold;
+    }
+    &-content {
+      margin: var(--proto-space) 0;
+      padding: var(--proto-space);
+      color: white;
+      background: #999999;
+      border-radius: var(--proto-space);
+      &__self {
+        background: var(--ion-color-primary);
+        color: var(--ion-color-primary-contrast); 
+      }
+    }
+  }
+  &--button {
+    margin: var(--proto-space);
+  }
+}

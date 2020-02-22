@@ -1,0 +1,35 @@
+<ion-header mode="ios">
+  <ion-toolbar mode="ios">
+    <ion-buttons mode="ios" slot="start">
+      <ion-back-button mode="ios" icon="ios-arrow-round-back" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title mode="ios">{{ 'VIEW.NEW_MESSAGE.TITLE' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="new-message">
+  <div class="new-message__name"
+    *ngIf="ad.user?.displayName">
+    {{ ad.user.displayName }}
+  </div>
+
+  <div class="new-message__description"
+    *ngIf="ad.description">
+    {{ ad.description }}
+  </div>
+
+  <form class="message-form" novalidate [formGroup]="messageForm" (ngSubmit)="submit()">
+    <ion-list mode="ios" class="proto-input-list">
+      <ion-item class="proto-input has-valid-state">
+        <ion-label position="floating">{{ 'INPUT.LABEL.MESSAGE' | translate }}</ion-label>
+        <ion-textarea formControlName="message" [placeholder]="'INPUT.PLACEHOLDER.MESSAGE' | translate"></ion-textarea>
+      </ion-item>
+
+      <ion-button class="proto-button" expand="block"
+        [disabled]="!messageFormIsValid()"
+        (click)="submit()">
+        {{ 'BUTTON.SUBMIT' | translate }}
+      </ion-button>
+    </ion-list>
+  </form>
+</ion-content>

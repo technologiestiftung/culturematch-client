@@ -1,0 +1,28 @@
+<ion-content>
+
+  <div class="section conversations-list--section-spacer">
+    </div>    
+  
+    <div class="section">
+      <div class="cell">
+  
+      <ion-list mode="ios" class="section conversations-list--list">
+        <h2>{{ 'VIEW.CONVERSATIONS.TITLE' || 'Nachrichten' | translate }}</h2>
+        <proto-conversation-preview
+          *ngFor="let conversation of conversations.items; trackBy: trackByFunction"
+          [conversation]="conversation"
+          (click)="openDetailPage(conversation)">
+        </proto-conversation-preview>
+      </ion-list>
+  
+      <ion-infinite-scroll threshold="250px"
+        (ionInfinite)="loadMore($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+  
+      </div>
+    </div>
+
+</ion-content>

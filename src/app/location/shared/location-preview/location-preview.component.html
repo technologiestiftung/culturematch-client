@@ -1,0 +1,23 @@
+<div class="location-preview-banner">
+  <img class="cover-img" [src]="location?.images[0] ? location?.images[0].url : './assets/img/fallback-default.png'">
+</div>
+
+<div class="location-preview-content">
+  <div class="location-preview-content-row">
+    <div class="location-preview-content-row__like">
+      <proto-like [entityId]="location?.id" [entityType]="'location'"></proto-like>
+    </div>
+  </div>
+  <h1 class="location-preview-content__name">{{ location?.title }}</h1>
+  <ng-container *ngIf="location?.address">
+    <p class="location-preview-content__meta bold"
+      *ngIf="distance">
+      {{ 'TERM.DISTANCE_IN_KM' | translate: { distance: distance } }}
+    </p>
+    <p *ngIf="!isHighlight && location.address" class="location-preview-content__meta ellipsis">
+      <ng-container *ngIf="location.address.street">{{ location.address.street }}</ng-container>
+      <ng-container *ngIf="location.address.zipcode">, {{ location.address.zipcode }}</ng-container>
+      <ng-container *ngIf="location.address.city"> {{ location.address.city }}</ng-container>
+    </p>
+  </ng-container>
+</div>

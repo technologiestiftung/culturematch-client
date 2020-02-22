@@ -1,0 +1,17 @@
+<ion-item class="proto-input proto-input--select">
+  <ion-label>{{ 'TERM.LANGUAGE' | translate }}</ion-label>
+  <ion-select
+    [(ngModel)]="currentLanguage"
+    (ionChange)="changeLanguage($event)"
+    [okText]="'BUTTON.OK' | translate"
+    [cancelText]="'BUTTON.CANCEL' | translate">
+
+    <ion-select-option
+      *ngFor="let language of availableLanguages"
+      [value]="language">
+      {{ 'LANGUAGE.' + language | translate }}
+    </ion-select-option>
+
+  </ion-select>
+  <div class="select-arrow"></div>
+</ion-item>
