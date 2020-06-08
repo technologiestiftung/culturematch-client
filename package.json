@@ -59,7 +59,7 @@
     "@angular/language-service": "8.2.14",
     "@ionic/angular-toolkit": "2.0.0",
     "@types/node": "12.7.12",
-    "codelyzer": "5.1.2",
+    "codelyzer": "5.2.2",
     "eslint": "6.5.1",
     "husky": "3.0.8",
     "staged-git-files": "1.2.0",
