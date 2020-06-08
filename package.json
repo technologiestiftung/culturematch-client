@@ -60,7 +60,7 @@
     "@ionic/angular-toolkit": "2.0.0",
     "@types/node": "12.7.12",
     "codelyzer": "5.1.2",
-    "eslint": "6.5.1",
+    "eslint": "6.8.0",
     "husky": "3.0.8",
     "staged-git-files": "1.2.0",
     "stylelint": "11.0.0",
